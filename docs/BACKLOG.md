@@ -3,7 +3,7 @@
 ## Phase 0: Prototype Hardening
 
 - [x] Add explicit test IDs to critical interactive controls where accessible names are not enough.
-- Split `src/ui/AppState.tsx` into domain-specific hooks once server-function boundaries are clearer.
+- [x] Split `src/ui/AppState.tsx` into domain-specific hooks once server-function boundaries are clearer.
 - Add lightweight UI smoke tests once a test runner exists.
 - Add screenshots to documentation.
 
