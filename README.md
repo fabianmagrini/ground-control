@@ -45,6 +45,8 @@ npm run test:ui
 - Approval, knowledge operations, observability, evaluation, and governance sections
 - Simulated knowledge base, tool registry, ingestion pipeline, model gateway, eval suite, and audit trail
 
+See [docs/SCREENSHOTS.md](docs/SCREENSHOTS.md) for current prototype screenshots.
+
 ## Current Prototype Files
 
 - `src/routes`: TanStack Start route files

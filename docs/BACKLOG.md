@@ -5,7 +5,7 @@
 - [x] Add explicit test IDs to critical interactive controls where accessible names are not enough.
 - [x] Split `src/ui/AppState.tsx` into domain-specific hooks once server-function boundaries are clearer.
 - [x] Add lightweight UI smoke tests once a test runner exists.
-- Add screenshots to documentation.
+- [x] Add screenshots to documentation.
 
 ## Phase 1: TanStack Start Migration
 

@@ -7,6 +7,7 @@ Start here when reviewing or extending the project documentation.
 - [Development Guide](DEVELOPMENT.md): local workflow, verification, and code organization
 - [Architecture](ARCHITECTURE.md): current/target architecture model and service boundaries
 - [Backlog](BACKLOG.md): phased roadmap from prototype to production app
+- [Screenshots](SCREENSHOTS.md): visual reference for current prototype sections
 
 ## Stack And Decisions
 
