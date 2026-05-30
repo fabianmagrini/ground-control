@@ -12,7 +12,7 @@ The app is still using simulated tickets, approvals, audit events, evals, retrie
 
 Keep prototype state in `src/ui/AppState.tsx`.
 
-This file owns:
+This file exposes:
 
 - Active ticket selection
 - Queue filtering
@@ -27,6 +27,10 @@ This file owns:
 
 Feature components consume state and actions through `useAppState()`.
 
+Implementation note:
+
+`AppState.tsx` now acts as the compatibility boundary for the UI-facing context. Domain-specific state lives in focused hooks under `src/ui/hooks`, including ticket state, Copilot run state, review workflow state, and knowledge search state.
+
 ## Consequences
 
 Positive:
@@ -39,10 +43,10 @@ Positive:
 Tradeoffs:
 
 - App state is still client-local and not durable.
-- The context will grow if not split soon.
+- Cross-workflow actions still need composition at the context boundary.
 
 Follow-up:
 
-- Move workflow actions into typed hooks or server functions.
+- Move server-owned workflow actions into TanStack Start server functions.
 - Replace local state with TanStack Query once server-backed data exists.
 - Keep `AppState.tsx` as a temporary migration bridge, not a permanent architecture.

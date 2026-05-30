@@ -39,6 +39,7 @@ Data services
 - [ADR 0003: Keep Prototype State in a Dedicated AppState Context](ADR-0003-prototype-state-boundary.md)
 - [ADR 0004: Use Server Functions as the First Backend Boundary](ADR-0004-server-function-boundary.md)
 - [ADR 0005: Temporarily Retain the Legacy Static Prototype](ADR-0005-retain-legacy-static-prototype.md)
+- [ADR 0006: Use Playwright for UI Smoke Tests](ADR-0006-playwright-ui-smoke-tests.md)
 
 ## Core Principle
 

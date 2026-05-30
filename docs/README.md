@@ -17,6 +17,7 @@ Start here when reviewing or extending the project documentation.
 - [ADR 0003](ADR-0003-prototype-state-boundary.md): prototype state boundary
 - [ADR 0004](ADR-0004-server-function-boundary.md): server-function backend boundary
 - [ADR 0005](ADR-0005-retain-legacy-static-prototype.md): legacy static prototype retention
+- [ADR 0006](ADR-0006-playwright-ui-smoke-tests.md): Playwright UI smoke tests
 
 ## Documentation Rules
 
