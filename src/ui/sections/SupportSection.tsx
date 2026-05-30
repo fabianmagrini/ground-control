@@ -17,6 +17,7 @@ export function SupportSection() {
             </div>
             <select
               aria-label="Filter queue"
+              data-testid="queue-filter"
               value={state.queueFilter}
               onChange={(event) => state.setQueueFilter(event.target.value)}
             >
@@ -30,6 +31,7 @@ export function SupportSection() {
             {state.filteredTickets.map((ticket) => (
               <button
                 className={`ticket-card ${ticket.id === activeTicket.id ? "active" : ""}`}
+                data-testid={`ticket-card-${ticket.id}`}
                 key={ticket.id}
                 onClick={() => state.selectTicket(ticket.id)}
                 type="button"
@@ -99,18 +101,34 @@ export function SupportSection() {
           <div className="composer">
             <textarea
               aria-label="Draft reply"
+              data-testid="draft-reply-input"
               rows={7}
               value={state.reply}
               onChange={(event) => state.setReply(event.target.value)}
             />
             <div className="composer-actions">
-              <button className="secondary-button" onClick={state.insertDraft} type="button">
+              <button
+                className="secondary-button"
+                data-testid="insert-draft-button"
+                onClick={state.insertDraft}
+                type="button"
+              >
                 Insert Draft
               </button>
-              <button className="danger-button" onClick={state.escalateTicket} type="button">
+              <button
+                className="danger-button"
+                data-testid="escalate-ticket-button"
+                onClick={state.escalateTicket}
+                type="button"
+              >
                 Escalate
               </button>
-              <button className="primary-button" onClick={state.approveReply} type="button">
+              <button
+                className="primary-button"
+                data-testid="approve-reply-button"
+                onClick={state.approveReply}
+                type="button"
+              >
                 Approve Reply
               </button>
             </div>
@@ -126,16 +144,31 @@ export function SupportSection() {
             <span className="confidence">{state.confidence}</span>
           </div>
           <div className="ai-output">
-            <OutputBlock title="Summary" action="Refresh" onClick={state.refreshSummary}>
+            <OutputBlock
+              title="Summary"
+              action="Refresh"
+              testId="refresh-summary-button"
+              onClick={state.refreshSummary}
+            >
               {state.summary}
             </OutputBlock>
-            <OutputBlock title="Suggested Action" action="Check" onClick={state.refreshAction}>
+            <OutputBlock
+              title="Suggested Action"
+              action="Check"
+              testId="refresh-action-button"
+              onClick={state.refreshAction}
+            >
               {state.action}
             </OutputBlock>
             <div className="output-block">
               <div className="block-title">
                 <span>Relevant Sources</span>
-                <button className="tiny-button" onClick={state.retrieveForActiveTicket} type="button">
+                <button
+                  className="tiny-button"
+                  data-testid="retrieve-sources-button"
+                  onClick={state.retrieveForActiveTicket}
+                  type="button"
+                >
                   Retrieve
                 </button>
               </div>
@@ -160,6 +193,7 @@ export function SupportSection() {
             <OutputBlock
               title="Draft Reply"
               action="Draft"
+              testId="draft-reply-button"
               onClick={state.draftForActiveTicket}
             >
               {state.draft}
@@ -172,6 +206,7 @@ export function SupportSection() {
             {(["trace", "account", "tools", "audit"] as const).map((name) => (
               <button
                 className={`tab ${state.tab === name ? "active" : ""}`}
+                data-testid={`system-tab-${name}`}
                 key={name}
                 onClick={() => state.setTab(name)}
                 type="button"

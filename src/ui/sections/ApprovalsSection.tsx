@@ -10,7 +10,12 @@ export function ApprovalsSection() {
           <p className="eyebrow">Human Review</p>
           <h3>Approval Queue</h3>
         </div>
-        <button className="primary-button" onClick={state.bulkApproveLowRisk} type="button">
+        <button
+          className="primary-button"
+          data-testid="bulk-approve-low-risk-button"
+          onClick={state.bulkApproveLowRisk}
+          type="button"
+        >
           Approve Low Risk
         </button>
       </div>

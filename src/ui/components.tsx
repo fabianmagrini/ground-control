@@ -62,11 +62,21 @@ export function AppShell({
             <h2>{title}</h2>
           </div>
           <div className="topbar-actions">
-            <button className="secondary-button" onClick={resetDemo} type="button">
+            <button
+              className="secondary-button"
+              data-testid="reset-demo-button"
+              onClick={resetDemo}
+              type="button"
+            >
               Reset
             </button>
             {section === "support" && (
-              <button className="primary-button" onClick={runCopilot} type="button">
+              <button
+                className="primary-button"
+                data-testid="run-copilot-button"
+                onClick={runCopilot}
+                type="button"
+              >
                 Run Copilot
               </button>
             )}
@@ -90,7 +100,11 @@ function NavLink({
   value: string | number;
 }) {
   return (
-    <Link className={`nav-item ${section === target ? "active" : ""}`} to={sectionConfig[target].path}>
+    <Link
+      className={`nav-item ${section === target ? "active" : ""}`}
+      data-testid={`nav-${target}`}
+      to={sectionConfig[target].path}
+    >
       <span>{label}</span>
       <strong>{value}</strong>
     </Link>
@@ -115,18 +129,20 @@ export function OutputBlock({
   title,
   action,
   onClick,
+  testId,
   children,
 }: {
   title: string;
   action: string;
   onClick: () => void;
+  testId?: string;
   children: string;
 }) {
   return (
     <div className="output-block">
       <div className="block-title">
         <span>{title}</span>
-        <button className="tiny-button" onClick={onClick} type="button">
+        <button className="tiny-button" data-testid={testId} onClick={onClick} type="button">
           {action}
         </button>
       </div>
@@ -211,10 +227,20 @@ export function ApprovalCard({
         {approval.ticketId} / {approval.reason} / {approval.status}
       </p>
       <div className="composer-actions">
-        <button className="secondary-button" onClick={() => onReject(approval.id)} type="button">
+        <button
+          className="secondary-button"
+          data-testid={`approval-reject-${approval.id}`}
+          onClick={() => onReject(approval.id)}
+          type="button"
+        >
           Reject
         </button>
-        <button className="primary-button" onClick={() => onApprove(approval.id)} type="button">
+        <button
+          className="primary-button"
+          data-testid={`approval-approve-${approval.id}`}
+          onClick={() => onApprove(approval.id)}
+          type="button"
+        >
           Approve
         </button>
       </div>
@@ -236,7 +262,7 @@ export function EvalPanel({
           <p className="eyebrow">Evaluation</p>
           <h3>Regression Suite</h3>
         </div>
-        <button className="secondary-button" onClick={onRunEvals} type="button">
+        <button className="secondary-button" data-testid="run-evals-button" onClick={onRunEvals} type="button">
           Run Evals
         </button>
       </div>

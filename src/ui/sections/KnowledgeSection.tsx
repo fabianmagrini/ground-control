@@ -12,6 +12,7 @@ export function KnowledgeSection() {
         </div>
         <input
           aria-label="Search knowledge base"
+          data-testid="knowledge-search-input"
           placeholder="Search knowledge base"
           type="search"
           value={state.knowledgeQuery}
