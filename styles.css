@@ -1,0 +1,812 @@
+:root {
+  color-scheme: light;
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef2f5;
+  --ink: #172026;
+  --muted: #63717d;
+  --line: #d8e0e6;
+  --blue: #2563eb;
+  --blue-dark: #1746b8;
+  --green: #0f8b63;
+  --amber: #b7791f;
+  --red: #c2413a;
+  --teal: #087f8c;
+  --nav: #122126;
+  --shadow: 0 18px 50px rgba(27, 39, 51, 0.08);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--nav);
+  color: #eef7f8;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.brand,
+.agent-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark,
+.avatar {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: #25a18e;
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 800;
+}
+
+.avatar {
+  background: #3b82f6;
+}
+
+.brand h1,
+.brand p,
+.agent-card p,
+.topbar h2,
+.topbar p,
+.panel-heading h3,
+.panel-heading p,
+.section-band h3,
+.section-band p {
+  margin: 0;
+}
+
+.brand h1 {
+  font-size: 18px;
+}
+
+.brand p,
+.agent-card p,
+.eyebrow {
+  color: #9fb4bb;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.nav-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  min-height: 48px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  border-radius: 8px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  font-weight: 800;
+}
+
+.nav-item strong {
+  min-width: 30px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 12px;
+}
+
+.nav-item.active,
+.nav-item:hover {
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.agent-card {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 18px;
+}
+
+.workspace {
+  min-width: 0;
+}
+
+.topbar {
+  min-height: 88px;
+  padding: 20px 28px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+}
+
+.topbar h2 {
+  font-size: 24px;
+}
+
+.topbar .eyebrow,
+.panel-heading .eyebrow,
+.section-band .eyebrow {
+  color: var(--muted);
+}
+
+.topbar-actions,
+.composer-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.primary-button,
+.secondary-button,
+.danger-button,
+.tiny-button {
+  border-radius: 8px;
+  min-height: 38px;
+  border: 1px solid transparent;
+  font-weight: 800;
+  padding: 0 14px;
+}
+
+.primary-button {
+  background: var(--blue);
+  color: white;
+}
+
+.primary-button:hover {
+  background: var(--blue-dark);
+}
+
+.secondary-button {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.danger-button {
+  color: var(--red);
+  background: #fff4f2;
+  border-color: #f2c8c1;
+}
+
+.tiny-button {
+  min-height: 28px;
+  color: var(--teal);
+  background: #e8f6f7;
+  padding: 0 10px;
+}
+
+.section-view {
+  display: none;
+  padding: 22px;
+}
+
+.section-view.active {
+  display: block;
+}
+
+.metric-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.metric-card,
+.queue-panel,
+.ticket-panel,
+.copilot-panel,
+.system-panel,
+.ops-panel,
+.approval-card,
+.knowledge-card,
+.ingestion-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.metric-card {
+  padding: 16px;
+}
+
+.metric-card span,
+.metadata-grid span,
+.risk-strip span,
+.ticket-meta,
+.gateway-card span,
+.eval-row span,
+.detail-row span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.metric-card strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 28px;
+}
+
+.metric-card p,
+.gateway-card p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.support-layout {
+  display: grid;
+  grid-template-columns: 320px minmax(440px, 1.25fr) minmax(340px, 0.95fr);
+  grid-template-areas:
+    "queue ticket copilot"
+    "queue ticket system";
+  gap: 18px;
+  align-items: start;
+}
+
+.queue-panel {
+  grid-area: queue;
+  padding: 16px;
+}
+
+.ticket-panel {
+  grid-area: ticket;
+  padding: 20px;
+}
+
+.copilot-panel {
+  grid-area: copilot;
+  padding: 18px;
+}
+
+.system-panel {
+  grid-area: system;
+  overflow: hidden;
+}
+
+.panel-heading,
+.section-band,
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.panel-heading {
+  margin-bottom: 16px;
+}
+
+.panel-heading.compact {
+  margin-bottom: 12px;
+}
+
+.panel-heading h3,
+.section-band h3 {
+  font-size: 20px;
+}
+
+select,
+input[type="search"] {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfd;
+  padding: 0 10px;
+  color: var(--ink);
+}
+
+.ticket-list,
+.source-list,
+.knowledge-list,
+.tool-list,
+.audit-list,
+.layer-stack,
+#eval-list,
+#gateway-list,
+#policy-list,
+#ingestion-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ticket-card {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #fbfcfd;
+  color: var(--ink);
+  text-align: left;
+  padding: 13px;
+  border-radius: 8px;
+}
+
+.ticket-card strong {
+  display: block;
+  margin: 4px 0;
+  line-height: 1.35;
+}
+
+.ticket-card.active,
+.ticket-card:hover {
+  background: #eef7f8;
+  border-color: #9fd4d7;
+}
+
+.status-pill,
+.confidence {
+  border-radius: 999px;
+  font-size: 12px;
+  padding: 6px 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.status-pill {
+  background: #e7f7ef;
+  color: var(--green);
+}
+
+.confidence {
+  background: #edf2ff;
+  color: var(--blue);
+}
+
+.metadata-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.metadata-grid div {
+  padding: 12px;
+  background: #fbfcfd;
+  border-right: 1px solid var(--line);
+}
+
+.metadata-grid div:last-child {
+  border-right: 0;
+}
+
+.metadata-grid strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+.risk-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.risk-strip div {
+  background: var(--surface-2);
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 0;
+}
+
+.risk-strip strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+}
+
+.message-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.message {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #fbfcfd;
+}
+
+.message.agent {
+  border-left: 4px solid var(--teal);
+}
+
+.message.customer {
+  border-left: 4px solid var(--amber);
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.message p,
+.output-block p,
+.source-card p,
+.knowledge-card p,
+.tool-card p,
+.layer-card p,
+.audit-item p,
+.approval-card p,
+.pipeline-step p,
+.policy-row p,
+.architecture-map p {
+  margin: 6px 0 0;
+  line-height: 1.45;
+}
+
+.composer textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: #fbfcfd;
+}
+
+.composer-actions {
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.ai-output {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.output-block,
+.source-card,
+.tool-card,
+.layer-card,
+.audit-item,
+.gateway-card,
+.eval-row,
+.pipeline-step,
+.architecture-map div {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 13px;
+  background: #fbfcfd;
+}
+
+.block-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  font-weight: 800;
+}
+
+.source-score,
+.approved,
+.risk-low {
+  color: var(--green);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.risk-medium {
+  color: var(--amber);
+  font-weight: 800;
+}
+
+.risk-high {
+  color: var(--red);
+  font-weight: 800;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--line);
+}
+
+.tab {
+  min-height: 44px;
+  border: 0;
+  background: #f8fafb;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.tab.active {
+  background: #ffffff;
+  color: var(--ink);
+  box-shadow: inset 0 -3px 0 var(--teal);
+}
+
+.tab-panel {
+  display: none;
+  padding: 16px;
+  max-height: 430px;
+  overflow: auto;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.layer-card,
+.pipeline-step {
+  position: relative;
+  padding-left: 42px;
+}
+
+.layer-card::before,
+.pipeline-step::before {
+  content: attr(data-step);
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  background: #e8f6f7;
+  color: var(--teal);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.account-score {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #eef7f8;
+  margin-bottom: 10px;
+}
+
+.account-score strong {
+  display: block;
+  font-size: 34px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+  padding: 10px 0;
+}
+
+.detail-row:last-child {
+  border-bottom: 0;
+}
+
+.muted {
+  color: var(--muted);
+  margin: 0;
+  font-size: 13px;
+}
+
+.section-band {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 16px;
+  margin-bottom: 18px;
+  align-items: center;
+}
+
+.approval-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.approval-card,
+.ingestion-panel,
+.ops-panel {
+  padding: 16px;
+}
+
+.approval-card h4 {
+  margin: 12px 0 4px;
+  font-size: 18px;
+}
+
+.knowledge-layout,
+.ops-grid,
+.governance-grid {
+  display: grid;
+  grid-template-columns: minmax(420px, 1.25fr) minmax(320px, 0.75fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.knowledge-card {
+  padding: 14px;
+}
+
+.card-row span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.eval-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(120px, 0.8fr) 92px;
+  gap: 12px;
+  align-items: center;
+}
+
+meter {
+  width: 100%;
+}
+
+.gateway-card strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 22px;
+}
+
+.policy-row {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 13px;
+  background: #fbfcfd;
+}
+
+.policy-row input {
+  margin-top: 3px;
+}
+
+.architecture-map {
+  display: grid;
+  gap: 10px;
+}
+
+@media (max-width: 1320px) {
+  .app-shell {
+    display: block;
+  }
+
+  .sidebar {
+    min-height: auto;
+    gap: 16px;
+  }
+
+  .nav-stack {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .agent-card {
+    display: none;
+  }
+
+  .support-layout {
+    grid-template-columns: minmax(280px, 0.7fr) minmax(420px, 1.3fr);
+    grid-template-areas:
+      "queue ticket"
+      "copilot system";
+  }
+}
+
+@media (max-width: 980px) {
+  .metric-row,
+  .approval-grid,
+  .knowledge-layout,
+  .ops-grid,
+  .governance-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .support-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "queue"
+      "ticket"
+      "copilot"
+      "system";
+  }
+
+  .nav-stack {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .sidebar,
+  .section-view {
+    padding: 14px;
+  }
+
+  .topbar,
+  .section-band {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .topbar-actions {
+    justify-content: space-between;
+  }
+
+  .metadata-grid,
+  .risk-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .metadata-grid div {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .metadata-grid div:last-child {
+    border-bottom: 0;
+  }
+
+  .tabs {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .eval-row {
+    grid-template-columns: 1fr;
+  }
+}

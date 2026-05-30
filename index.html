@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IntelligenceOps Support Console</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Application navigation">
+        <div class="brand">
+          <div class="brand-mark">IO</div>
+          <div>
+            <h1>IntelligenceOps</h1>
+            <p>Enterprise support console</p>
+          </div>
+        </div>
+
+        <nav class="nav-stack" aria-label="Primary">
+          <button class="nav-item active" data-section="support" type="button">
+            <span>Support Desk</span>
+            <strong id="ticket-count">0</strong>
+          </button>
+          <button class="nav-item" data-section="approvals" type="button">
+            <span>Approvals</span>
+            <strong id="approval-count">0</strong>
+          </button>
+          <button class="nav-item" data-section="knowledge" type="button">
+            <span>Knowledge</span>
+            <strong id="knowledge-count">0</strong>
+          </button>
+          <button class="nav-item" data-section="observability" type="button">
+            <span>Observability</span>
+            <strong id="eval-health">-</strong>
+          </button>
+          <button class="nav-item" data-section="governance" type="button">
+            <span>Governance</span>
+            <strong id="policy-mode">On</strong>
+          </button>
+        </nav>
+
+        <div class="agent-card">
+          <span class="avatar">FM</span>
+          <div>
+            <strong>Fabian Magrini</strong>
+            <p>Support Lead / Sydney</p>
+          </div>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="section-eyebrow">Support Desk</p>
+            <h2 id="section-title">Enterprise Support Command Center</h2>
+          </div>
+          <div class="topbar-actions">
+            <button class="secondary-button" id="reset-demo" type="button">Reset</button>
+            <button class="primary-button" id="run-copilot" type="button">Run Copilot</button>
+          </div>
+        </header>
+
+        <section class="section-view active" id="support-section">
+          <div class="metric-row" id="metric-row"></div>
+
+          <div class="support-layout">
+            <section class="queue-panel" aria-label="Ticket queue">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Queue</p>
+                  <h3>Priority Work</h3>
+                </div>
+                <select id="queue-filter" aria-label="Filter queue">
+                  <option value="all">All tickets</option>
+                  <option value="P1">P1 only</option>
+                  <option value="Enterprise">Enterprise</option>
+                  <option value="Pending customer">Pending customer</option>
+                </select>
+              </div>
+              <div class="ticket-list" id="ticket-list"></div>
+            </section>
+
+            <article class="ticket-panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Ticket</p>
+                  <h3 id="customer-name">Customer</h3>
+                </div>
+                <span class="status-pill" id="ticket-status">Open</span>
+              </div>
+
+              <div class="metadata-grid">
+                <div>
+                  <span>Priority</span>
+                  <strong id="ticket-priority">-</strong>
+                </div>
+                <div>
+                  <span>Plan</span>
+                  <strong id="ticket-plan">-</strong>
+                </div>
+                <div>
+                  <span>SLA</span>
+                  <strong id="ticket-sla">-</strong>
+                </div>
+                <div>
+                  <span>ARR</span>
+                  <strong id="ticket-arr">-</strong>
+                </div>
+              </div>
+
+              <div class="risk-strip" id="risk-strip"></div>
+              <div class="message-thread" id="message-thread"></div>
+
+              <div class="composer">
+                <textarea id="reply-box" rows="7" aria-label="Draft reply"></textarea>
+                <div class="composer-actions">
+                  <button class="secondary-button" id="insert-draft" type="button">Insert Draft</button>
+                  <button class="danger-button" id="escalate-ticket" type="button">Escalate</button>
+                  <button class="primary-button" id="approve-reply" type="button">Approve Reply</button>
+                </div>
+              </div>
+            </article>
+
+            <section class="copilot-panel" aria-label="Copilot output">
+              <div class="panel-heading compact">
+                <div>
+                  <p class="eyebrow">Copilot</p>
+                  <h3>Assistance</h3>
+                </div>
+                <span class="confidence" id="confidence-score">Idle</span>
+              </div>
+
+              <div class="ai-output">
+                <div class="output-block">
+                  <div class="block-title">
+                    <span>Summary</span>
+                    <button class="tiny-button" id="summarize" type="button">Refresh</button>
+                  </div>
+                  <p id="summary-text">Run Copilot to summarize the issue, retrieve policy context, and draft a response.</p>
+                </div>
+
+                <div class="output-block">
+                  <div class="block-title">
+                    <span>Suggested Action</span>
+                    <button class="tiny-button" id="next-action" type="button">Check</button>
+                  </div>
+                  <p id="action-text">No action suggested yet.</p>
+                </div>
+
+                <div class="output-block">
+                  <div class="block-title">
+                    <span>Relevant Sources</span>
+                    <button class="tiny-button" id="find-policy" type="button">Retrieve</button>
+                  </div>
+                  <div class="source-list" id="source-list"></div>
+                </div>
+
+                <div class="output-block">
+                  <div class="block-title">
+                    <span>Draft Reply</span>
+                    <button class="tiny-button" id="draft-reply" type="button">Draft</button>
+                  </div>
+                  <p id="draft-text">No draft generated yet.</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="system-panel" aria-label="Intelligence layer operations">
+              <div class="tabs" role="tablist" aria-label="System views">
+                <button class="tab active" data-tab="trace" type="button">Trace</button>
+                <button class="tab" data-tab="account" type="button">Account</button>
+                <button class="tab" data-tab="tools" type="button">Tools</button>
+                <button class="tab" data-tab="audit" type="button">Audit</button>
+              </div>
+
+              <div class="tab-panel active" id="trace-panel">
+                <div class="layer-stack" id="layer-stack"></div>
+              </div>
+
+              <div class="tab-panel" id="account-panel">
+                <div class="account-card" id="account-card"></div>
+              </div>
+
+              <div class="tab-panel" id="tools-panel">
+                <div class="tool-list" id="tool-list"></div>
+              </div>
+
+              <div class="tab-panel" id="audit-panel">
+                <div class="audit-list" id="audit-list"></div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="section-view" id="approvals-section">
+          <div class="section-band">
+            <div>
+              <p class="eyebrow">Human Review</p>
+              <h3>Approval Queue</h3>
+            </div>
+            <button class="primary-button" id="bulk-approve" type="button">Approve Low Risk</button>
+          </div>
+          <div class="approval-grid" id="approval-grid"></div>
+        </section>
+
+        <section class="section-view" id="knowledge-section">
+          <div class="section-band">
+            <div>
+              <p class="eyebrow">Knowledge Operations</p>
+              <h3>Sources, Freshness, and Access</h3>
+            </div>
+            <input id="knowledge-query" type="search" placeholder="Search knowledge base" aria-label="Search knowledge base" />
+          </div>
+          <div class="knowledge-layout">
+            <div class="knowledge-list" id="knowledge-list"></div>
+            <div class="ingestion-panel">
+              <h3>Ingestion Pipeline</h3>
+              <div id="ingestion-steps"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-view" id="observability-section">
+          <div class="metric-row" id="ops-metric-row"></div>
+          <div class="ops-grid">
+            <section class="ops-panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Evaluation</p>
+                  <h3>Regression Suite</h3>
+                </div>
+                <button class="secondary-button" id="run-evals" type="button">Run Evals</button>
+              </div>
+              <div id="eval-list"></div>
+            </section>
+            <section class="ops-panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Telemetry</p>
+                  <h3>Model Gateway</h3>
+                </div>
+              </div>
+              <div id="gateway-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="section-view" id="governance-section">
+          <div class="governance-grid">
+            <section class="ops-panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Policy Controls</p>
+                  <h3>Runtime Guardrails</h3>
+                </div>
+              </div>
+              <div id="policy-list"></div>
+            </section>
+            <section class="ops-panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Architecture</p>
+                  <h3>Intelligence Layer Contract</h3>
+                </div>
+              </div>
+              <div class="architecture-map" id="architecture-map"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
