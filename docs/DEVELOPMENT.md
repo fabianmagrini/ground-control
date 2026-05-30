@@ -16,6 +16,12 @@ npm run check
 npm run build
 ```
 
+Run UI smoke tests:
+
+```bash
+npm run test:ui
+```
+
 The current app uses TanStack Start, React, TypeScript, and Vite.
 
 ## Local Verification

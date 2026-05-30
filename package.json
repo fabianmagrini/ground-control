@@ -10,6 +10,7 @@
     "start": "node .output/server/index.mjs",
     "check": "tsc --noEmit",
     "check:legacy": "node --check app.js",
+    "test:ui": "playwright test",
     "status": "git status --short"
   },
   "keywords": [
@@ -32,6 +33,7 @@
     "vite": "^8.0.14"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "typescript": "^6.0.3"

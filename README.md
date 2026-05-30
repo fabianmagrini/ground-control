@@ -31,6 +31,12 @@ npm run check
 npm run build
 ```
 
+Run UI smoke tests:
+
+```bash
+npm run test:ui
+```
+
 ## What It Shows
 
 - Support command center with queue filters, SLA state, ARR, customer risk, sentiment, and account context
