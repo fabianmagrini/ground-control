@@ -48,6 +48,7 @@ Data services
 - [ADR 0012: Add OIDC-Shaped API Auth With RBAC and ABAC](ADR-0012-oidc-rbac-abac.md)
 - [ADR 0013: Enforce Tenant-Isolated Route Data Reads](ADR-0013-tenant-isolated-route-data.md)
 - [ADR 0014: Add OpenTelemetry Trace Instrumentation](ADR-0014-opentelemetry-traces.md)
+- [ADR 0015: Add Vendor-Neutral AI Observability Events](ADR-0015-ai-observability-events.md)
 
 ## Core Principle
 

@@ -12,6 +12,7 @@ import { generateSupportOutput, routeSupportModel } from "./modelGateway";
 import { renderSupportPrompt } from "./promptRegistry";
 import { retrieveSourcesForTicket } from "./retrieval";
 import { validateSupportOutput } from "./validators";
+import { recordSupportRunObservation } from "../observability/aiObservability";
 import { withSpan } from "../observability/tracing";
 
 export type IntelligenceRunMode = "summarize" | "retrieve" | "draft" | "validate" | "full";
@@ -85,7 +86,7 @@ export function runSupportIntelligence({
     span.setAttribute("app.validation_status", validation.status);
     span.setAttribute("app.approval_required", output.approvalRequired || validation.status !== "Pass");
 
-    return copilotRunResultSchema.parse({
+    const result = copilotRunResultSchema.parse({
       ticketId: ticket.id,
       summary: output.summary,
       action: output.action,
@@ -137,6 +138,17 @@ export function runSupportIntelligence({
       }),
       approvalRequired: output.approvalRequired || validation.status !== "Pass",
     });
+
+    const observation = recordSupportRunObservation({
+      ticket,
+      mode,
+      result,
+      sources: retrieval.sources,
+    });
+    span.setAttribute("app.ai_observation_id", observation.id);
+    span.setAttribute("app.ai_observation_sink", observation.metadata.sink);
+
+    return result;
   });
 }
 

@@ -26,6 +26,7 @@ Start here when reviewing or extending the project documentation.
 - [ADR 0012](ADR-0012-oidc-rbac-abac.md): OIDC-shaped API auth with RBAC and ABAC
 - [ADR 0013](ADR-0013-tenant-isolated-route-data.md): tenant-isolated route data reads
 - [ADR 0014](ADR-0014-opentelemetry-traces.md): OpenTelemetry trace instrumentation
+- [ADR 0015](ADR-0015-ai-observability-events.md): vendor-neutral AI observability events
 
 ## Documentation Rules
 

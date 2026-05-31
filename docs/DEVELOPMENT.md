@@ -99,6 +99,12 @@ API handlers and intelligence runs are instrumented with `@opentelemetry/api` sp
 
 Current span coverage includes API route handlers, prompt rendering, model routing, retrieval, deterministic generation, and output validation.
 
+## AI Observability
+
+Support Copilot runs emit local AI observability events with prompt version, model/provider, retrieved sources, validation status, approval requirement, latency, estimated cost, and output sizing. Set `GROUND_CONTROL_AI_OBSERVABILITY_LOG=console` to print JSON events during local development.
+
+The event schema is Langfuse-ready, but the app does not transmit data to Langfuse until an explicit sink is configured with approved credentials and retention requirements.
+
 ## Code Organization Guidance
 
 Current app structure:
@@ -107,7 +113,7 @@ Current app structure:
 - `src/domain/fixtures.ts`: mock data
 - `src/auth`: OIDC-shaped identity parsing, RBAC, ABAC, and API auth middleware
 - `src/intelligence`: intelligence service, retrieval, prompt registry, model gateway, and validators
-- `src/observability`: OpenTelemetry tracing helpers
+- `src/observability`: OpenTelemetry tracing helpers and AI observability events
 - `src/ui/IntelligenceOpsApp.tsx`: app shell composition
 - `src/ui/AppState.tsx`: prototype state and workflow actions
 - `src/ui/sections`: route-level feature components
