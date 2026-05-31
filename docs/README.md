@@ -27,6 +27,7 @@ Start here when reviewing or extending the project documentation.
 - [ADR 0013](ADR-0013-tenant-isolated-route-data.md): tenant-isolated route data reads
 - [ADR 0014](ADR-0014-opentelemetry-traces.md): OpenTelemetry trace instrumentation
 - [ADR 0015](ADR-0015-ai-observability-events.md): vendor-neutral AI observability events
+- [ADR 0016](ADR-0016-eval-regression-gates.md): intelligence eval regression gates
 
 ## Documentation Rules
 

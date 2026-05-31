@@ -37,6 +37,12 @@ Run UI smoke tests:
 npm run test:ui
 ```
 
+Run intelligence regression evals:
+
+```bash
+npm run evals
+```
+
 Start the optional local Postgres database:
 
 ```bash

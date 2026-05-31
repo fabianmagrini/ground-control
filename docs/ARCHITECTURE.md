@@ -49,6 +49,7 @@ Data services
 - [ADR 0013: Enforce Tenant-Isolated Route Data Reads](ADR-0013-tenant-isolated-route-data.md)
 - [ADR 0014: Add OpenTelemetry Trace Instrumentation](ADR-0014-opentelemetry-traces.md)
 - [ADR 0015: Add Vendor-Neutral AI Observability Events](ADR-0015-ai-observability-events.md)
+- [ADR 0016: Add Intelligence Eval Regression Gates](ADR-0016-eval-regression-gates.md)
 
 ## Core Principle
 

@@ -22,6 +22,12 @@ Run UI smoke tests:
 npm run test:ui
 ```
 
+Run intelligence regression evals:
+
+```bash
+npm run evals
+```
+
 The current app uses TanStack Start, React, TypeScript, and Vite.
 
 ## Database-Backed Route Data
@@ -105,6 +111,10 @@ Support Copilot runs emit local AI observability events with prompt version, mod
 
 The event schema is Langfuse-ready, but the app does not transmit data to Langfuse until an explicit sink is configured with approved credentials and retention requirements.
 
+## Eval Gates
+
+`npm run evals` runs deterministic support Copilot regression checks over the prototype ticket set. The gate fails nonzero when citation coverage, governance citation, structured trace metadata, risky-case approval gates, or prompt-injection resistance regress.
+
 ## Code Organization Guidance
 
 Current app structure:
@@ -112,6 +122,7 @@ Current app structure:
 - `src/domain/types.ts`: domain types
 - `src/domain/fixtures.ts`: mock data
 - `src/auth`: OIDC-shaped identity parsing, RBAC, ABAC, and API auth middleware
+- `src/evals`: deterministic intelligence regression evals
 - `src/intelligence`: intelligence service, retrieval, prompt registry, model gateway, and validators
 - `src/observability`: OpenTelemetry tracing helpers and AI observability events
 - `src/ui/IntelligenceOpsApp.tsx`: app shell composition

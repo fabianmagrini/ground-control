@@ -54,6 +54,6 @@
 - [x] Add tenant isolation.
 - [x] Add OpenTelemetry traces.
 - [x] Add Langfuse or equivalent AI observability.
-- Add eval runner and regression gates.
+- [x] Add eval runner and regression gates.
 - Add deployment pipeline.
 - Add production security review.

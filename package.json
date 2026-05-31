@@ -17,6 +17,7 @@
     "start": "node .output/server/index.mjs",
     "check": "tsc --noEmit",
     "check:legacy": "node --check app.js",
+    "evals": "node scripts/run-evals.mjs",
     "test:ui": "playwright test",
     "status": "git status --short"
   },
