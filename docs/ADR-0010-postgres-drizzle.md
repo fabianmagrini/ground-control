@@ -29,6 +29,8 @@ Use tenant-scoped UUID primary keys for database records and keep fixture-compat
 
 Do not connect current UI workflows to the database yet. Existing fixture-backed server functions remain active until schema, seed data, and migration scripts exist.
 
+Route-data endpoints should read through a repository boundary. Until local seed data exists, the repository keeps a fixture fallback by default and switches to Postgres only when `GROUND_CONTROL_ROUTE_DATA_SOURCE=database` or `GROUND_CONTROL_USE_DATABASE=true` is set.
+
 ## Consequences
 
 Positive:
@@ -38,11 +40,12 @@ Positive:
 - Keeps the future path open for pgvector-backed retrieval.
 - Aligns database access with server-only code boundaries.
 - Gives the fixture-backed prototype a concrete database target without forcing an immediate data migration.
+- Makes the database-backed endpoint path testable without requiring every local UI check to run Postgres.
 
 Tradeoffs:
 
 - Drizzle Kit introduces development dependencies and audit surface.
-- No persistence behavior changes until seed data and database-backed endpoints are implemented.
+- Full persistence behavior still depends on local seed data and database command documentation.
 - Local developers need a Postgres `DATABASE_URL` when running database commands.
 - JSONB trace and metadata fields are flexible but less relationally queryable until usage patterns are clearer.
 
@@ -50,4 +53,4 @@ Follow-up:
 
 - Generate and review migrations.
 - Add local seed data.
-- Replace fixture-backed endpoints after persistence behavior is verified.
+- Remove the fixture fallback after persistence behavior is verified.

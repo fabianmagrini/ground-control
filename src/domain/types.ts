@@ -12,6 +12,7 @@ export type {
   Message,
   Priority,
   RetrievedSource,
+  ReviewWorkflowRouteData,
   Risk,
   Section,
   Ticket,

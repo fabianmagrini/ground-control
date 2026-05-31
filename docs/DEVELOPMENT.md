@@ -24,6 +24,18 @@ npm run test:ui
 
 The current app uses TanStack Start, React, TypeScript, and Vite.
 
+## Database-Backed Route Data
+
+Route data is read through `src/db/routeDataRepository.ts`. By default, the repository keeps the fixture fallback active so local UI smoke tests do not require Postgres before seed data exists.
+
+To read route data from Postgres-backed endpoints, provide `DATABASE_URL` and run with:
+
+```bash
+GROUND_CONTROL_ROUTE_DATA_SOURCE=database npm run dev
+```
+
+The database must already have the Drizzle migration applied and local seed data loaded.
+
 ## Local Verification
 
 After UI changes:

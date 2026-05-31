@@ -6,12 +6,11 @@ import {
   ticketSchema,
 } from "../../packages/contracts/src";
 import {
-  evals,
-  initialApprovals,
-  initialAuditEvents,
-  initialTickets,
-  knowledgeBase,
-} from "../domain/fixtures";
+  getKnowledgeRouteDataFromRepository,
+  getReviewWorkflowRouteDataFromRepository,
+  getTicketRouteDataFromRepository,
+  getTicketsRouteDataFromRepository,
+} from "../db/routeDataRepository";
 
 export const apiApp = new Hono()
   .get("/health", (context) =>
@@ -20,29 +19,25 @@ export const apiApp = new Hono()
       service: "ground-control-api",
     }),
   )
-  .get("/tickets", (context) =>
-    context.json(ticketSchema.array().parse(structuredClone(initialTickets))),
+  .get("/tickets", async (context) =>
+    context.json(ticketSchema.array().parse(await getTicketsRouteDataFromRepository())),
   )
-  .get("/tickets/:ticketId", (context) => {
+  .get("/tickets/:ticketId", async (context) => {
     const ticketId = context.req.param("ticketId");
-    const ticket = initialTickets.find((item) => item.id === ticketId);
+    const ticket = await getTicketRouteDataFromRepository(ticketId);
 
     if (!ticket) {
       throw new HTTPException(404, { message: `Ticket ${ticketId} not found.` });
     }
 
-    return context.json(ticketSchema.parse(structuredClone(ticket)));
+    return context.json(ticketSchema.parse(ticket));
   })
-  .get("/knowledge", (context) =>
-    context.json(knowledgeSourceSchema.array().parse(structuredClone(knowledgeBase))),
+  .get("/knowledge", async (context) =>
+    context.json(knowledgeSourceSchema.array().parse(await getKnowledgeRouteDataFromRepository())),
   )
-  .get("/review-workflow", (context) =>
+  .get("/review-workflow", async (context) =>
     context.json(
-      reviewWorkflowRouteDataSchema.parse({
-        approvals: structuredClone(initialApprovals),
-        auditEvents: structuredClone(initialAuditEvents),
-        evals: structuredClone(evals),
-      }),
+      reviewWorkflowRouteDataSchema.parse(await getReviewWorkflowRouteDataFromRepository()),
     ),
   );
 

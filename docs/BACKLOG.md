@@ -35,7 +35,7 @@
 - [x] Add Hono or Fastify API service.
 - [x] Add Postgres and Drizzle.
 - [x] Add tables for tenants, users, accounts, tickets, messages, approvals, audit events, traces, prompts, evals, knowledge sources, and chunks.
-- Replace fixtures with database-backed endpoints.
+- [x] Replace fixtures with database-backed endpoints.
 - Add local seed data.
 
 ## Phase 4: Real Intelligence Layer
