@@ -42,6 +42,7 @@ Data services
 - [ADR 0006: Use Playwright for UI Smoke Tests](ADR-0006-playwright-ui-smoke-tests.md)
 - [ADR 0007: Use TanStack Query for Route Data](ADR-0007-query-backed-route-data.md)
 - [ADR 0008: Use Shared Zod Contracts](ADR-0008-shared-zod-contracts.md)
+- [ADR 0009: Add Hono API Service Boundary](ADR-0009-hono-api-service.md)
 
 ## Core Principle
 

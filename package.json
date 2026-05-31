@@ -29,6 +29,7 @@
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/router-plugin": "^1.168.13",
     "@vitejs/plugin-react": "^6.0.2",
+    "hono": "^4.12.23",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "vite": "^8.0.14",
