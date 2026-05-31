@@ -12,6 +12,7 @@ import { useCopilotRun, type SystemTab } from "./hooks/useCopilotRun";
 import { useKnowledgeSearch } from "./hooks/useKnowledgeSearch";
 import { useReviewWorkflow } from "./hooks/useReviewWorkflow";
 import { useSupportTickets, type Metric } from "./hooks/useSupportTickets";
+import { useSupportWorkflowActions } from "./hooks/useSupportWorkflowActions";
 
 export type Bootstrap = {
   appName: string;
@@ -72,43 +73,18 @@ export function AppStateProvider({
   const tickets = useSupportTickets();
   const copilot = useCopilotRun(tickets.activeTicket, review.addAudit);
   const knowledge = useKnowledgeSearch();
-
-  function selectTicket(ticketId: string) {
-    tickets.selectTicket(ticketId);
-    copilot.resetCopilot();
-  }
-
-  function approveReply() {
-    if (!copilot.reply.trim()) return;
-    tickets.updateActiveTicketStatus("Pending customer");
-    copilot.markReplyApproved();
-    review.addApproval({
-      ticketId: tickets.activeTicket.id,
-      customer: tickets.activeTicket.customer,
-      risk: tickets.activeTicket.risk,
-      reason: "Approved customer response with AI assistance",
-      status: "Approved",
-    });
-    review.addAudit("Fabian", `Approved AI-assisted reply for ${tickets.activeTicket.id}.`);
-  }
-
-  function escalateTicket() {
-    tickets.updateActiveTicketStatus("Waiting on Engineering");
-    review.addApproval({
-      ticketId: tickets.activeTicket.id,
-      customer: tickets.activeTicket.customer,
-      risk: tickets.activeTicket.risk,
-      reason: "Workflow tool createEscalation requires approval",
-      status: "Awaiting review",
-    });
-    review.addAudit("Fabian", `Requested escalation approval for ${tickets.activeTicket.id}.`);
-  }
-
-  function resetDemo() {
-    tickets.resetTickets();
-    review.resetReviewWorkflow();
-    copilot.resetCopilot();
-  }
+  const workflow = useSupportWorkflowActions({
+    activeTicket: tickets.activeTicket,
+    reply: copilot.reply,
+    selectTicketById: tickets.selectTicket,
+    updateActiveTicketStatus: tickets.updateActiveTicketStatus,
+    addApproval: review.addApproval,
+    addAudit: review.addAudit,
+    markReplyApproved: copilot.markReplyApproved,
+    resetTickets: tickets.resetTickets,
+    resetReviewWorkflow: review.resetReviewWorkflow,
+    resetCopilot: copilot.resetCopilot,
+  });
 
   const value: AppStateValue = {
     bootstrap,
@@ -135,20 +111,20 @@ export function AppStateProvider({
     setKnowledgeQuery: knowledge.setKnowledgeQuery,
     filteredKnowledge: knowledge.filteredKnowledge,
     metrics: tickets.metrics,
-    selectTicket,
+    selectTicket: workflow.selectTicket,
     runCopilot: copilot.runCopilot,
     refreshSummary: copilot.refreshSummary,
     refreshAction: copilot.refreshAction,
     retrieveForActiveTicket: copilot.retrieveForActiveTicket,
     draftForActiveTicket: copilot.draftForActiveTicket,
     insertDraft: copilot.insertDraft,
-    approveReply,
-    escalateTicket,
+    approveReply: workflow.approveReply,
+    escalateTicket: workflow.escalateTicket,
     approveItem: review.approveItem,
     rejectItem: review.rejectItem,
     bulkApproveLowRisk: review.bulkApproveLowRisk,
     runEvals: review.runEvals,
-    resetDemo,
+    resetDemo: workflow.resetDemo,
   };
 
   return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;

@@ -10,7 +10,7 @@
 ## Phase 1: TanStack Start Migration
 
 - [x] Add `/support/$ticketId` for deep-linked ticket selection.
-- Move all remaining fixture state transitions into typed hooks or server functions.
+- [x] Move all remaining fixture state transitions into typed hooks or server functions.
 - Add TanStack Query for route data.
 - Add TanStack Table for queues and logs.
 
