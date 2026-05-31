@@ -93,6 +93,12 @@ Production must verify OIDC tokens before claims are trusted by the API.
 
 In database mode, the API passes the authenticated identity into repository reads. The identity `tenant` claim is resolved to a tenant ID before reading route data, so tickets, accounts, messages, knowledge sources, approvals, audit events, and evals are loaded only for that tenant.
 
+## Tracing
+
+API handlers and intelligence runs are instrumented with `@opentelemetry/api` spans. The local app does not configure an SDK or exporter, so spans are no-ops until a server runtime installs an OpenTelemetry SDK and exporter.
+
+Current span coverage includes API route handlers, prompt rendering, model routing, retrieval, deterministic generation, and output validation.
+
 ## Code Organization Guidance
 
 Current app structure:
@@ -101,6 +107,7 @@ Current app structure:
 - `src/domain/fixtures.ts`: mock data
 - `src/auth`: OIDC-shaped identity parsing, RBAC, ABAC, and API auth middleware
 - `src/intelligence`: intelligence service, retrieval, prompt registry, model gateway, and validators
+- `src/observability`: OpenTelemetry tracing helpers
 - `src/ui/IntelligenceOpsApp.tsx`: app shell composition
 - `src/ui/AppState.tsx`: prototype state and workflow actions
 - `src/ui/sections`: route-level feature components

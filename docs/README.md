@@ -25,6 +25,7 @@ Start here when reviewing or extending the project documentation.
 - [ADR 0011](ADR-0011-intelligence-service-boundary.md): intelligence service boundary
 - [ADR 0012](ADR-0012-oidc-rbac-abac.md): OIDC-shaped API auth with RBAC and ABAC
 - [ADR 0013](ADR-0013-tenant-isolated-route-data.md): tenant-isolated route data reads
+- [ADR 0014](ADR-0014-opentelemetry-traces.md): OpenTelemetry trace instrumentation
 
 ## Documentation Rules
 

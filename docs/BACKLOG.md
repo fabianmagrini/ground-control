@@ -52,7 +52,7 @@
 
 - [x] Add SSO/OIDC with RBAC and ABAC.
 - [x] Add tenant isolation.
-- Add OpenTelemetry traces.
+- [x] Add OpenTelemetry traces.
 - Add Langfuse or equivalent AI observability.
 - Add eval runner and regression gates.
 - Add deployment pipeline.
