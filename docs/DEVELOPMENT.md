@@ -121,6 +121,10 @@ GitHub Actions runs `.github/workflows/ci.yml` on pull requests and pushes to `m
 
 The workflow is a verification and artifact pipeline. It does not deploy to hosting or use production secrets.
 
+## Security Review
+
+`docs/SECURITY_REVIEW.md` records current controls, dependency audit status, release blockers, and requirements before real customer data. Update it before adding real SSO, real model providers, production persistence, hosted observability, external integrations, or deployment credentials.
+
 ## Code Organization Guidance
 
 Current app structure:

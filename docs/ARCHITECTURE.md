@@ -51,6 +51,7 @@ Data services
 - [ADR 0015: Add Vendor-Neutral AI Observability Events](ADR-0015-ai-observability-events.md)
 - [ADR 0016: Add Intelligence Eval Regression Gates](ADR-0016-eval-regression-gates.md)
 - [ADR 0017: Add CI Verification Pipeline](ADR-0017-ci-verification-pipeline.md)
+- [ADR 0018: Add Production Security Review Gate](ADR-0018-production-security-review.md)
 
 ## Core Principle
 

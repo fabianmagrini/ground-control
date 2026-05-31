@@ -7,6 +7,7 @@ Start here when reviewing or extending the project documentation.
 - [Development Guide](DEVELOPMENT.md): local workflow, verification, and code organization
 - [Architecture](ARCHITECTURE.md): current/target architecture model and service boundaries
 - [Backlog](BACKLOG.md): phased roadmap from prototype to production app
+- [Production Security Review](SECURITY_REVIEW.md): current controls, blockers, and go-live requirements
 - [Screenshots](SCREENSHOTS.md): visual reference for current prototype sections
 
 ## Stack And Decisions
@@ -29,6 +30,7 @@ Start here when reviewing or extending the project documentation.
 - [ADR 0015](ADR-0015-ai-observability-events.md): vendor-neutral AI observability events
 - [ADR 0016](ADR-0016-eval-regression-gates.md): intelligence eval regression gates
 - [ADR 0017](ADR-0017-ci-verification-pipeline.md): CI verification pipeline
+- [ADR 0018](ADR-0018-production-security-review.md): production security review gate
 
 ## Documentation Rules
 

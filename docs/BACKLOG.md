@@ -56,4 +56,4 @@
 - [x] Add Langfuse or equivalent AI observability.
 - [x] Add eval runner and regression gates.
 - [x] Add deployment pipeline.
-- Add production security review.
+- [x] Add production security review.
