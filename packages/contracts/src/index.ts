@@ -131,6 +131,12 @@ export const evalRunSchema = z.object({
   status: z.enum(["Pass", "Watch", "Failed"]),
 });
 
+export const reviewWorkflowRouteDataSchema = z.object({
+  approvals: z.array(approvalSchema),
+  auditEvents: z.array(auditEventSchema),
+  evals: z.array(evalCaseSchema),
+});
+
 export const gatewayMetricSchema = z.object({
   label: z.string(),
   value: z.string(),
@@ -172,6 +178,7 @@ export type AuditEvent = z.infer<typeof auditEventSchema>;
 export type Approval = z.infer<typeof approvalSchema>;
 export type EvalCase = z.infer<typeof evalCaseSchema>;
 export type EvalRun = z.infer<typeof evalRunSchema>;
+export type ReviewWorkflowRouteData = z.infer<typeof reviewWorkflowRouteDataSchema>;
 export type GatewayMetric = z.infer<typeof gatewayMetricSchema>;
 export type CopilotRunRequest = z.infer<typeof copilotRunRequestSchema>;
 export type CopilotRunResult = z.infer<typeof copilotRunResultSchema>;

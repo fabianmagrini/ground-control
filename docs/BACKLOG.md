@@ -28,7 +28,7 @@
   - [x] AiTrace
   - [x] ToolCall
   - [x] EvalRun
-- Use schemas in server functions and UI.
+- [x] Use schemas in server functions and UI.
 
 ## Phase 3: API and Persistence
 

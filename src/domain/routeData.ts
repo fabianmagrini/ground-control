@@ -1,5 +1,18 @@
 import { queryOptions } from "@tanstack/react-query";
 import {
+  approvalSchema,
+  auditEventSchema,
+  evalCaseSchema,
+  knowledgeSourceSchema,
+  reviewWorkflowRouteDataSchema,
+  ticketSchema,
+} from "../../packages/contracts/src";
+import {
+  getKnowledgeRouteData,
+  getReviewWorkflowRouteData,
+  getTicketsRouteData,
+} from "./serverFunctions";
+import {
   evals,
   initialApprovals,
   initialAuditEvents,
@@ -15,26 +28,26 @@ export const routeDataKeys = {
 
 export const ticketsRouteDataQueryOptions = queryOptions({
   queryKey: routeDataKeys.tickets,
-  queryFn: async () => structuredClone(initialTickets),
-  initialData: () => structuredClone(initialTickets),
+  queryFn: () => getTicketsRouteData(),
+  initialData: () => ticketSchema.array().parse(structuredClone(initialTickets)),
 });
 
 export const knowledgeRouteDataQueryOptions = queryOptions({
   queryKey: routeDataKeys.knowledge,
-  queryFn: async () => structuredClone(knowledgeBase),
-  initialData: () => structuredClone(knowledgeBase),
+  queryFn: () => getKnowledgeRouteData(),
+  initialData: () => knowledgeSourceSchema.array().parse(structuredClone(knowledgeBase)),
 });
 
 export const reviewWorkflowRouteDataQueryOptions = queryOptions({
   queryKey: routeDataKeys.reviewWorkflow,
-  queryFn: async () => ({
-    approvals: structuredClone(initialApprovals),
-    auditEvents: structuredClone(initialAuditEvents),
-    evals: structuredClone(evals),
-  }),
-  initialData: () => ({
-    approvals: structuredClone(initialApprovals),
-    auditEvents: structuredClone(initialAuditEvents),
-    evals: structuredClone(evals),
-  }),
+  queryFn: () => getReviewWorkflowRouteData(),
+  initialData: getInitialReviewWorkflowRouteData,
 });
+
+function getInitialReviewWorkflowRouteData() {
+  return reviewWorkflowRouteDataSchema.parse({
+    approvals: approvalSchema.array().parse(structuredClone(initialApprovals)),
+    auditEvents: auditEventSchema.array().parse(structuredClone(initialAuditEvents)),
+    evals: evalCaseSchema.array().parse(structuredClone(evals)),
+  });
+}
