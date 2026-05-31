@@ -1,6 +1,6 @@
 import "@tanstack/react-start/server-only";
 
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import {
   evals,
   initialApprovals,
@@ -9,6 +9,7 @@ import {
   knowledgeBase,
 } from "../domain/fixtures";
 import type {
+  AuthIdentity,
   Approval,
   AuditEvent,
   EvalCase,
@@ -24,9 +25,14 @@ import {
   evals as evalRows,
   knowledgeSources,
   messages,
+  tenants,
   tickets,
   users,
 } from "./schema";
+
+export type TenantRouteDataContext = {
+  tenantSlug: string;
+};
 
 export function isDatabaseRouteDataEnabled() {
   return (
@@ -35,25 +41,37 @@ export function isDatabaseRouteDataEnabled() {
   );
 }
 
-export async function getTicketsRouteDataFromRepository(): Promise<Ticket[]> {
+export async function getTicketsRouteDataFromRepository(
+  context?: TenantRouteDataContext | AuthIdentity,
+): Promise<Ticket[]> {
   if (!isDatabaseRouteDataEnabled()) {
     return structuredClone(initialTickets);
   }
 
-  return getTicketsFromDatabase();
+  const tenantId = await resolveTenantId(context);
+  return getTicketsFromDatabase(tenantId);
 }
 
-export async function getTicketRouteDataFromRepository(ticketId: string): Promise<Ticket | undefined> {
-  const allTickets = await getTicketsRouteDataFromRepository();
+export async function getTicketRouteDataFromRepository(
+  ticketId: string,
+  context?: TenantRouteDataContext | AuthIdentity,
+): Promise<Ticket | undefined> {
+  const allTickets = await getTicketsRouteDataFromRepository(context);
   return allTickets.find((ticket) => ticket.id === ticketId);
 }
 
-export async function getKnowledgeRouteDataFromRepository(): Promise<KnowledgeSource[]> {
+export async function getKnowledgeRouteDataFromRepository(
+  context?: TenantRouteDataContext | AuthIdentity,
+): Promise<KnowledgeSource[]> {
   if (!isDatabaseRouteDataEnabled()) {
     return structuredClone(knowledgeBase);
   }
 
-  const rows = await db.select().from(knowledgeSources);
+  const tenantId = await resolveTenantId(context);
+  const rows = await db
+    .select()
+    .from(knowledgeSources)
+    .where(eq(knowledgeSources.tenantId, tenantId));
   return rows.map((source): KnowledgeSource => ({
     id: source.externalId,
     title: source.title,
@@ -65,7 +83,9 @@ export async function getKnowledgeRouteDataFromRepository(): Promise<KnowledgeSo
   }));
 }
 
-export async function getReviewWorkflowRouteDataFromRepository(): Promise<ReviewWorkflowRouteData> {
+export async function getReviewWorkflowRouteDataFromRepository(
+  context?: TenantRouteDataContext | AuthIdentity,
+): Promise<ReviewWorkflowRouteData> {
   if (!isDatabaseRouteDataEnabled()) {
     return {
       approvals: structuredClone(initialApprovals),
@@ -74,10 +94,11 @@ export async function getReviewWorkflowRouteDataFromRepository(): Promise<Review
     };
   }
 
+  const tenantId = await resolveTenantId(context);
   const [approvalData, auditEventData, evalData] = await Promise.all([
-    getApprovalsFromDatabase(),
-    getAuditEventsFromDatabase(),
-    getEvalsFromDatabase(),
+    getApprovalsFromDatabase(tenantId),
+    getAuditEventsFromDatabase(tenantId),
+    getEvalsFromDatabase(tenantId),
   ]);
 
   return {
@@ -87,12 +108,12 @@ export async function getReviewWorkflowRouteDataFromRepository(): Promise<Review
   };
 }
 
-async function getTicketsFromDatabase(): Promise<Ticket[]> {
+async function getTicketsFromDatabase(tenantId: string): Promise<Ticket[]> {
   const [ticketRows, accountRows, userRows, messageRows] = await Promise.all([
-    db.select().from(tickets),
-    db.select().from(accounts),
-    db.select().from(users),
-    db.select().from(messages),
+    db.select().from(tickets).where(eq(tickets.tenantId, tenantId)),
+    db.select().from(accounts).where(eq(accounts.tenantId, tenantId)),
+    db.select().from(users).where(eq(users.tenantId, tenantId)),
+    db.select().from(messages).where(eq(messages.tenantId, tenantId)),
   ]);
 
   const accountsById = new Map(accountRows.map((account) => [account.id, account]));
@@ -146,14 +167,20 @@ async function getTicketsFromDatabase(): Promise<Ticket[]> {
   });
 }
 
-async function getApprovalsFromDatabase(): Promise<Approval[]> {
-  const approvalRows = await db.select().from(approvals);
+async function getApprovalsFromDatabase(tenantId: string): Promise<Approval[]> {
+  const approvalRows = await db.select().from(approvals).where(eq(approvals.tenantId, tenantId));
 
   return Promise.all(
     approvalRows.map(async (approval): Promise<Approval> => {
-      const [ticket] = await db.select().from(tickets).where(eq(tickets.id, approval.ticketId));
+      const [ticket] = await db
+        .select()
+        .from(tickets)
+        .where(and(eq(tickets.id, approval.ticketId), eq(tickets.tenantId, tenantId)));
       const [account] = ticket
-        ? await db.select().from(accounts).where(eq(accounts.id, ticket.accountId))
+        ? await db
+            .select()
+            .from(accounts)
+            .where(and(eq(accounts.id, ticket.accountId), eq(accounts.tenantId, tenantId)))
         : [];
 
       return {
@@ -168,8 +195,8 @@ async function getApprovalsFromDatabase(): Promise<Approval[]> {
   );
 }
 
-async function getAuditEventsFromDatabase(): Promise<AuditEvent[]> {
-  const rows = await db.select().from(auditEvents);
+async function getAuditEventsFromDatabase(tenantId: string): Promise<AuditEvent[]> {
+  const rows = await db.select().from(auditEvents).where(eq(auditEvents.tenantId, tenantId));
   return rows.map((event): AuditEvent => ({
     time: formatTime(event.occurredAt),
     actor: event.actorName,
@@ -177,14 +204,29 @@ async function getAuditEventsFromDatabase(): Promise<AuditEvent[]> {
   }));
 }
 
-async function getEvalsFromDatabase(): Promise<EvalCase[]> {
-  const rows = await db.select().from(evalRows);
+async function getEvalsFromDatabase(tenantId: string): Promise<EvalCase[]> {
+  const rows = await db.select().from(evalRows).where(eq(evalRows.tenantId, tenantId));
   return rows.map((evalCase): EvalCase => ({
     name: evalCase.name,
     score: evalCase.score,
     threshold: evalCase.threshold,
     status: evalCase.status === "Failed" ? "Watch" : evalCase.status,
   }));
+}
+
+async function resolveTenantId(context?: TenantRouteDataContext | AuthIdentity) {
+  const tenantSlug =
+    context && "tenantSlug" in context ? context.tenantSlug : "ground-control-demo";
+  const [tenant] = await db
+    .select({ id: tenants.id })
+    .from(tenants)
+    .where(eq(tenants.slug, tenantSlug));
+
+  if (!tenant) {
+    throw new Error(`Tenant ${tenantSlug} was not found.`);
+  }
+
+  return tenant.id;
 }
 
 function formatTime(date: Date) {

@@ -91,6 +91,8 @@ The Hono API enforces an OIDC-shaped identity, RBAC permissions, and ABAC filter
 
 Production must verify OIDC tokens before claims are trusted by the API.
 
+In database mode, the API passes the authenticated identity into repository reads. The identity `tenant` claim is resolved to a tenant ID before reading route data, so tickets, accounts, messages, knowledge sources, approvals, audit events, and evals are loaded only for that tenant.
+
 ## Code Organization Guidance
 
 Current app structure:

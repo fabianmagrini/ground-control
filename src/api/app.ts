@@ -29,7 +29,7 @@ export const apiApp = new Hono<{ Variables: AuthVariables }>()
   .get("/tickets", async (context) => {
     const identity = context.get("identity");
     assertPermission(identity, "tickets:read");
-    const tickets = (await getTicketsRouteDataFromRepository()).filter((ticket) =>
+    const tickets = (await getTicketsRouteDataFromRepository(identity)).filter((ticket) =>
       canReadTicket(identity, ticket),
     );
 
@@ -39,7 +39,7 @@ export const apiApp = new Hono<{ Variables: AuthVariables }>()
     const identity = context.get("identity");
     assertPermission(identity, "tickets:read");
     const ticketId = context.req.param("ticketId");
-    const ticket = await getTicketRouteDataFromRepository(ticketId);
+    const ticket = await getTicketRouteDataFromRepository(ticketId, identity);
 
     if (!ticket) {
       throw new HTTPException(404, { message: `Ticket ${ticketId} not found.` });
@@ -54,7 +54,7 @@ export const apiApp = new Hono<{ Variables: AuthVariables }>()
   .get("/knowledge", async (context) => {
     const identity = context.get("identity");
     assertPermission(identity, "knowledge:read");
-    const sources = (await getKnowledgeRouteDataFromRepository()).filter((source) =>
+    const sources = (await getKnowledgeRouteDataFromRepository(identity)).filter((source) =>
       canReadKnowledgeSource(identity, source),
     );
 
@@ -65,7 +65,7 @@ export const apiApp = new Hono<{ Variables: AuthVariables }>()
     assertPermission(identity, "review-workflow:read");
 
     return context.json(
-      reviewWorkflowRouteDataSchema.parse(await getReviewWorkflowRouteDataFromRepository()),
+      reviewWorkflowRouteDataSchema.parse(await getReviewWorkflowRouteDataFromRepository(identity)),
     );
   });
 
