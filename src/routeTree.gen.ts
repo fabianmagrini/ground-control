@@ -15,6 +15,7 @@ import { Route as KnowledgeRouteImport } from './routes/knowledge'
 import { Route as GovernanceRouteImport } from './routes/governance'
 import { Route as ApprovalsRouteImport } from './routes/approvals'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SupportTicketIdRouteImport } from './routes/support.$ticketId'
 
 const SupportRoute = SupportRouteImport.update({
   id: '/support',
@@ -46,6 +47,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SupportTicketIdRoute = SupportTicketIdRouteImport.update({
+  id: '/$ticketId',
+  path: '/$ticketId',
+  getParentRoute: () => SupportRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -53,7 +59,8 @@ export interface FileRoutesByFullPath {
   '/governance': typeof GovernanceRoute
   '/knowledge': typeof KnowledgeRoute
   '/observability': typeof ObservabilityRoute
-  '/support': typeof SupportRoute
+  '/support': typeof SupportRouteWithChildren
+  '/support/$ticketId': typeof SupportTicketIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +68,8 @@ export interface FileRoutesByTo {
   '/governance': typeof GovernanceRoute
   '/knowledge': typeof KnowledgeRoute
   '/observability': typeof ObservabilityRoute
-  '/support': typeof SupportRoute
+  '/support': typeof SupportRouteWithChildren
+  '/support/$ticketId': typeof SupportTicketIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,7 +78,8 @@ export interface FileRoutesById {
   '/governance': typeof GovernanceRoute
   '/knowledge': typeof KnowledgeRoute
   '/observability': typeof ObservabilityRoute
-  '/support': typeof SupportRoute
+  '/support': typeof SupportRouteWithChildren
+  '/support/$ticketId': typeof SupportTicketIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/knowledge'
     | '/observability'
     | '/support'
+    | '/support/$ticketId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/knowledge'
     | '/observability'
     | '/support'
+    | '/support/$ticketId'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/knowledge'
     | '/observability'
     | '/support'
+    | '/support/$ticketId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -105,7 +117,7 @@ export interface RootRouteChildren {
   GovernanceRoute: typeof GovernanceRoute
   KnowledgeRoute: typeof KnowledgeRoute
   ObservabilityRoute: typeof ObservabilityRoute
-  SupportRoute: typeof SupportRoute
+  SupportRoute: typeof SupportRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -152,8 +164,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/support/$ticketId': {
+      id: '/support/$ticketId'
+      path: '/$ticketId'
+      fullPath: '/support/$ticketId'
+      preLoaderRoute: typeof SupportTicketIdRouteImport
+      parentRoute: typeof SupportRoute
+    }
   }
 }
+
+interface SupportRouteChildren {
+  SupportTicketIdRoute: typeof SupportTicketIdRoute
+}
+
+const SupportRouteChildren: SupportRouteChildren = {
+  SupportTicketIdRoute: SupportTicketIdRoute,
+}
+
+const SupportRouteWithChildren =
+  SupportRoute._addFileChildren(SupportRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -161,7 +191,7 @@ const rootRouteChildren: RootRouteChildren = {
   GovernanceRoute: GovernanceRoute,
   KnowledgeRoute: KnowledgeRoute,
   ObservabilityRoute: ObservabilityRoute,
-  SupportRoute: SupportRoute,
+  SupportRoute: SupportRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

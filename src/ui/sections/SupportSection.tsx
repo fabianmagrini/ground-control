@@ -1,9 +1,16 @@
+import { useNavigate } from "@tanstack/react-router";
 import { AccountCard, AuditList, MetricRow, OutputBlock, ToolList } from "../components";
 import { useAppState } from "../AppState";
 
 export function SupportSection() {
   const state = useAppState();
+  const navigate = useNavigate();
   const activeTicket = state.activeTicket;
+
+  function selectTicket(ticketId: string) {
+    state.selectTicket(ticketId);
+    void navigate({ to: "/support/$ticketId", params: { ticketId } });
+  }
 
   return (
     <section className="section-view active">
@@ -33,7 +40,7 @@ export function SupportSection() {
                 className={`ticket-card ${ticket.id === activeTicket.id ? "active" : ""}`}
                 data-testid={`ticket-card-${ticket.id}`}
                 key={ticket.id}
-                onClick={() => state.selectTicket(ticket.id)}
+                onClick={() => selectTicket(ticket.id)}
                 type="button"
               >
                 <span className="ticket-meta">

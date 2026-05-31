@@ -35,6 +35,7 @@ test("keeps route sections interactive for knowledge and eval workflows", async 
   await page.getByTestId("ticket-card-TCK-4824").click();
 
   await expect(page.getByRole("heading", { name: "Duplicate invoice for April renewal" })).toBeVisible();
+  await expect(page).toHaveURL(/\/support\/TCK-4824$/);
   await expect(page.getByText("Run Copilot to summarize the issue")).toBeVisible();
 
   await page.getByTestId("nav-knowledge").click();
@@ -47,4 +48,15 @@ test("keeps route sections interactive for knowledge and eval workflows", async 
 
   await expect(page.getByText("SLA escalation correctness")).toBeVisible();
   await expect(page.getByText("91% Pass")).toBeVisible();
+});
+
+test("opens a deep-linked support ticket directly", async ({ page }) => {
+  await page.goto("/support/TCK-4833");
+  await page.waitForLoadState("networkidle");
+
+  await expect(
+    page.getByRole("heading", { name: "Export job repeatedly failing after retention policy change" }),
+  ).toBeVisible();
+  await expect(page.getByTestId("ticket-card-TCK-4833")).toHaveClass(/active/);
+  await expect(page.getByRole("heading", { name: "CivicCloud" })).toBeVisible();
 });
