@@ -23,7 +23,9 @@ Add:
 - `src/db/client.ts`
 - `src/db/schema.ts`
 
-Keep the schema file as a placeholder until the table model is added in the next backlog item.
+Define the initial table model in `src/db/schema.ts` for tenants, users, accounts, tickets, messages, approvals, audit events, traces, prompts, evals, knowledge sources, and chunks.
+
+Use tenant-scoped UUID primary keys for database records and keep fixture-compatible external IDs where the prototype already exposes IDs such as `TCK-4821`, `APR-902`, and `KB-102`. Store trace steps, tool calls, retrieved source IDs, and flexible metadata as JSONB until those shapes need separate queryable tables. Store chunk embeddings in a pgvector `vector(1536)` column to match the planned retrieval direction.
 
 Do not connect current UI workflows to the database yet. Existing fixture-backed server functions remain active until schema, seed data, and migration scripts exist.
 
@@ -35,16 +37,17 @@ Positive:
 - Provides a clear place for table definitions and migrations.
 - Keeps the future path open for pgvector-backed retrieval.
 - Aligns database access with server-only code boundaries.
+- Gives the fixture-backed prototype a concrete database target without forcing an immediate data migration.
 
 Tradeoffs:
 
 - Drizzle Kit introduces development dependencies and audit surface.
-- No persistence behavior changes until tables and seed data are implemented.
+- No persistence behavior changes until seed data and database-backed endpoints are implemented.
 - Local developers need a Postgres `DATABASE_URL` when running database commands.
+- JSONB trace and metadata fields are flexible but less relationally queryable until usage patterns are clearer.
 
 Follow-up:
 
-- Add table definitions for the Phase 3 data model.
 - Generate and review migrations.
 - Add local seed data.
 - Replace fixture-backed endpoints after persistence behavior is verified.
