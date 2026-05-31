@@ -34,7 +34,14 @@ To read route data from Postgres-backed endpoints, provide `DATABASE_URL` and ru
 GROUND_CONTROL_ROUTE_DATA_SOURCE=database npm run dev
 ```
 
-The database must already have the Drizzle migration applied and local seed data loaded.
+The database must already have the Drizzle migration applied and local seed data loaded:
+
+```bash
+npm run db:push
+npm run db:seed
+```
+
+The seed script resets only the `ground-control-demo` tenant and reloads the prototype tickets, messages, knowledge sources, approvals, audit events, prompt, trace, evals, and chunks.
 
 ## Local Verification
 

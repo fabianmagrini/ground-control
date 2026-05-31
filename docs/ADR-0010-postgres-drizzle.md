@@ -31,6 +31,8 @@ Do not connect current UI workflows to the database yet. Existing fixture-backed
 
 Route-data endpoints should read through a repository boundary. Until local seed data exists, the repository keeps a fixture fallback by default and switches to Postgres only when `GROUND_CONTROL_ROUTE_DATA_SOURCE=database` or `GROUND_CONTROL_USE_DATABASE=true` is set.
 
+Provide local seed data through `npm run db:seed`. The seed script resets only the `ground-control-demo` tenant, then loads the prototype support tickets, messages, knowledge sources, chunks, approvals, audit events, prompt, trace, and eval data.
+
 ## Consequences
 
 Positive:
@@ -41,16 +43,16 @@ Positive:
 - Aligns database access with server-only code boundaries.
 - Gives the fixture-backed prototype a concrete database target without forcing an immediate data migration.
 - Makes the database-backed endpoint path testable without requiring every local UI check to run Postgres.
+- Gives developers a repeatable local dataset that matches the prototype workflows.
 
 Tradeoffs:
 
 - Drizzle Kit introduces development dependencies and audit surface.
-- Full persistence behavior still depends on local seed data and database command documentation.
+- Local seed data intentionally resets the demo tenant, so it is not suitable for shared or production databases.
 - Local developers need a Postgres `DATABASE_URL` when running database commands.
 - JSONB trace and metadata fields are flexible but less relationally queryable until usage patterns are clearer.
 
 Follow-up:
 
 - Generate and review migrations.
-- Add local seed data.
 - Remove the fixture fallback after persistence behavior is verified.
