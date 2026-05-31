@@ -7,6 +7,9 @@
   "scripts": {
     "dev": "vite dev --host 0.0.0.0 --port 4173",
     "build": "vite build",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
     "start": "node .output/server/index.mjs",
     "check": "tsc --noEmit",
     "check:legacy": "node --check app.js",
@@ -29,7 +32,9 @@
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/router-plugin": "^1.168.13",
     "@vitejs/plugin-react": "^6.0.2",
+    "drizzle-orm": "^0.45.2",
     "hono": "^4.12.23",
+    "postgres": "^3.4.9",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "vite": "^8.0.14",
@@ -37,8 +42,10 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
+    "drizzle-kit": "^0.31.10",
     "typescript": "^6.0.3"
   }
 }

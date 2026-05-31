@@ -21,6 +21,7 @@ Start here when reviewing or extending the project documentation.
 - [ADR 0007](ADR-0007-query-backed-route-data.md): TanStack Query-backed route data
 - [ADR 0008](ADR-0008-shared-zod-contracts.md): shared Zod contracts
 - [ADR 0009](ADR-0009-hono-api-service.md): Hono API service boundary
+- [ADR 0010](ADR-0010-postgres-drizzle.md): Postgres and Drizzle persistence
 
 ## Documentation Rules
 
