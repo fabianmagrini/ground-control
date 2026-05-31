@@ -55,5 +55,5 @@
 - [x] Add OpenTelemetry traces.
 - [x] Add Langfuse or equivalent AI observability.
 - [x] Add eval runner and regression gates.
-- Add deployment pipeline.
+- [x] Add deployment pipeline.
 - Add production security review.

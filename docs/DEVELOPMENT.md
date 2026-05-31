@@ -115,6 +115,12 @@ The event schema is Langfuse-ready, but the app does not transmit data to Langfu
 
 `npm run evals` runs deterministic support Copilot regression checks over the prototype ticket set. The gate fails nonzero when citation coverage, governance citation, structured trace metadata, risky-case approval gates, or prompt-injection resistance regress.
 
+## CI Pipeline
+
+GitHub Actions runs `.github/workflows/ci.yml` on pull requests and pushes to `main`. The pipeline installs dependencies, installs Playwright Chromium, runs TypeScript and legacy checks, runs intelligence evals, builds the app, runs UI smoke tests, and uploads the `dist/` production build as an artifact.
+
+The workflow is a verification and artifact pipeline. It does not deploy to hosting or use production secrets.
+
 ## Code Organization Guidance
 
 Current app structure:
