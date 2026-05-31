@@ -6,6 +6,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { AppStateProvider } from "../ui/AppState";
+import { QueryProvider } from "../ui/QueryProvider";
 import "../../styles.css";
 
 export const Route = createRootRoute({
@@ -22,9 +23,11 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-      <AppStateProvider bootstrap={{ appName: "IntelligenceOps", environment: "local-development" }}>
-        <Outlet />
-      </AppStateProvider>
+      <QueryProvider>
+        <AppStateProvider bootstrap={{ appName: "IntelligenceOps", environment: "local-development" }}>
+          <Outlet />
+        </AppStateProvider>
+      </QueryProvider>
     </RootDocument>
   );
 }

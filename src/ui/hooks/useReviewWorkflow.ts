@@ -1,9 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import {
-  evals as initialEvals,
-  initialApprovals,
-  initialAuditEvents,
-} from "../../domain/fixtures";
+import { reviewWorkflowRouteDataQueryOptions } from "../../domain/routeData";
 import type { Approval, AuditEvent, EvalCase, Risk } from "../../domain/types";
 
 type ApprovalRequest = {
@@ -15,11 +12,14 @@ type ApprovalRequest = {
 };
 
 export function useReviewWorkflow() {
-  const [approvals, setApprovals] = useState<Approval[]>(() => structuredClone(initialApprovals));
-  const [auditEvents, setAuditEvents] = useState<AuditEvent[]>(() =>
-    structuredClone(initialAuditEvents),
+  const { data: reviewRouteData } = useQuery(reviewWorkflowRouteDataQueryOptions);
+  const [approvals, setApprovals] = useState<Approval[]>(() =>
+    structuredClone(reviewRouteData.approvals),
   );
-  const [evals, setEvals] = useState<EvalCase[]>(() => structuredClone(initialEvals));
+  const [auditEvents, setAuditEvents] = useState<AuditEvent[]>(() =>
+    structuredClone(reviewRouteData.auditEvents),
+  );
+  const [evals, setEvals] = useState<EvalCase[]>(() => structuredClone(reviewRouteData.evals));
 
   const passCount = evals.filter((item) => item.status === "Pass").length;
 
@@ -45,9 +45,9 @@ export function useReviewWorkflow() {
   }
 
   function resetReviewWorkflow() {
-    setApprovals(structuredClone(initialApprovals));
-    setAuditEvents(structuredClone(initialAuditEvents));
-    setEvals(structuredClone(initialEvals));
+    setApprovals(structuredClone(reviewRouteData.approvals));
+    setAuditEvents(structuredClone(reviewRouteData.auditEvents));
+    setEvals(structuredClone(reviewRouteData.evals));
   }
 
   return {

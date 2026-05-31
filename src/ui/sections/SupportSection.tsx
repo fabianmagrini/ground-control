@@ -1,5 +1,12 @@
 import { useNavigate } from "@tanstack/react-router";
-import { AccountCard, AuditList, MetricRow, OutputBlock, ToolList } from "../components";
+import {
+  AccountCard,
+  AuditList,
+  MetricRow,
+  OutputBlock,
+  TicketQueueTable,
+  ToolList,
+} from "../components";
 import { useAppState } from "../AppState";
 
 export function SupportSection() {
@@ -34,25 +41,11 @@ export function SupportSection() {
               <option value="Pending customer">Pending customer</option>
             </select>
           </div>
-          <div className="ticket-list">
-            {state.filteredTickets.map((ticket) => (
-              <button
-                className={`ticket-card ${ticket.id === activeTicket.id ? "active" : ""}`}
-                data-testid={`ticket-card-${ticket.id}`}
-                key={ticket.id}
-                onClick={() => selectTicket(ticket.id)}
-                type="button"
-              >
-                <span className="ticket-meta">
-                  {ticket.id} / {ticket.priority} / {ticket.sla}
-                </span>
-                <strong>{ticket.title}</strong>
-                <span>
-                  {ticket.customer} / {ticket.plan} / {ticket.status}
-                </span>
-              </button>
-            ))}
-          </div>
+          <TicketQueueTable
+            activeTicketId={activeTicket.id}
+            onSelect={selectTicket}
+            tickets={state.filteredTickets}
+          />
         </section>
 
         <article className="ticket-panel">

@@ -11,8 +11,8 @@
 
 - [x] Add `/support/$ticketId` for deep-linked ticket selection.
 - [x] Move all remaining fixture state transitions into typed hooks or server functions.
-- Add TanStack Query for route data.
-- Add TanStack Table for queues and logs.
+- [x] Add TanStack Query for route data.
+- [x] Add TanStack Table for queues and logs.
 
 ## Phase 2: Shared Contracts
 

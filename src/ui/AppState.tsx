@@ -1,9 +1,9 @@
 import { createContext, useContext } from "react";
-import { knowledgeBase } from "../domain/fixtures";
 import type {
   Approval,
   AuditEvent,
   EvalCase,
+  KnowledgeSource,
   RetrievedSource,
   Ticket,
   TraceStep,
@@ -42,7 +42,8 @@ type AppStateValue = {
   passCount: number;
   knowledgeQuery: string;
   setKnowledgeQuery: (value: string) => void;
-  filteredKnowledge: typeof knowledgeBase;
+  knowledgeSources: KnowledgeSource[];
+  filteredKnowledge: KnowledgeSource[];
   metrics: readonly Metric[];
   selectTicket: (ticketId: string) => void;
   runCopilot: () => void;
@@ -109,6 +110,7 @@ export function AppStateProvider({
     passCount: review.passCount,
     knowledgeQuery: knowledge.knowledgeQuery,
     setKnowledgeQuery: knowledge.setKnowledgeQuery,
+    knowledgeSources: knowledge.knowledgeSources,
     filteredKnowledge: knowledge.filteredKnowledge,
     metrics: tickets.metrics,
     selectTicket: workflow.selectTicket,

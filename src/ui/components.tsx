@@ -1,5 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { gateway, ingestionSteps, knowledgeBase, policies, tools } from "../domain/fixtures";
+import {
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+  type ColumnDef,
+} from "@tanstack/react-table";
+import { useMemo } from "react";
+import { gateway, ingestionSteps, policies, tools } from "../domain/fixtures";
 import { sectionConfig } from "../domain/navigation";
 import type { Approval, AuditEvent, EvalCase, Section, Ticket } from "../domain/types";
 import { useAppState } from "./AppState";
@@ -15,7 +22,8 @@ export function AppShell({
   title: string;
   children: React.ReactNode;
 }) {
-  const { bootstrap, tickets, approvals, passCount, evals, runCopilot, resetDemo } = useAppState();
+  const { bootstrap, tickets, approvals, passCount, evals, knowledgeSources, runCopilot, resetDemo } =
+    useAppState();
 
   return (
     <div className="app-shell">
@@ -36,7 +44,7 @@ export function AppShell({
             label="Approvals"
             value={approvals.filter((item) => item.status === "Awaiting review").length}
           />
-          <NavLink section={section} target="knowledge" label="Knowledge" value={knowledgeBase.length} />
+          <NavLink section={section} target="knowledge" label="Knowledge" value={knowledgeSources.length} />
           <NavLink
             section={section}
             target="observability"
@@ -193,16 +201,142 @@ export function ToolList() {
   );
 }
 
-export function AuditList({ auditEvents }: { auditEvents: AuditEvent[] }) {
+export function TicketQueueTable({
+  activeTicketId,
+  onSelect,
+  tickets,
+}: {
+  activeTicketId: string;
+  onSelect: (ticketId: string) => void;
+  tickets: Ticket[];
+}) {
+  const columns = useMemo<ColumnDef<Ticket>[]>(
+    () => [
+      {
+        id: "ticket",
+        header: "Ticket",
+        cell: ({ row }) => {
+          const ticket = row.original;
+          return (
+            <button
+              className={`ticket-row-button ${ticket.id === activeTicketId ? "active" : ""}`}
+              data-testid={`ticket-card-${ticket.id}`}
+              onClick={() => onSelect(ticket.id)}
+              type="button"
+            >
+              <span className="ticket-meta">
+                {ticket.id} / {ticket.priority} / {ticket.sla}
+              </span>
+              <strong>{ticket.title}</strong>
+              <span>
+                {ticket.customer} / {ticket.plan} / {ticket.status}
+              </span>
+            </button>
+          );
+        },
+      },
+      {
+        accessorKey: "risk",
+        header: "Risk",
+        cell: ({ row }) => (
+          <span className={`risk-${row.original.risk.toLowerCase()}`}>{row.original.risk}</span>
+        ),
+      },
+    ],
+    [activeTicketId, onSelect],
+  );
+  const table = useReactTable({
+    columns,
+    data: tickets,
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (ticket) => ticket.id,
+  });
+
   return (
-    <div className="audit-list">
-      {auditEvents.map((item, index) => (
-        <div className="audit-item" key={`${item.time}-${index}`}>
-          <span>{item.time}</span>
-          <strong>{item.actor}</strong>
-          <p>{item.event}</p>
-        </div>
-      ))}
+    <div className="table-shell">
+      <table className="data-table queue-table">
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr className={row.original.id === activeTicketId ? "active" : ""} key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export function AuditList({ auditEvents }: { auditEvents: AuditEvent[] }) {
+  const columns = useMemo<ColumnDef<AuditEvent & { rowId: string }>[]>(
+    () => [
+      {
+        accessorKey: "time",
+        header: "Time",
+      },
+      {
+        accessorKey: "actor",
+        header: "Actor",
+      },
+      {
+        accessorKey: "event",
+        header: "Event",
+      },
+    ],
+    [],
+  );
+  const data = useMemo(
+    () => auditEvents.map((event, index) => ({ ...event, rowId: `${event.time}-${index}` })),
+    [auditEvents],
+  );
+  const table = useReactTable({
+    columns,
+    data,
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (event) => event.rowId,
+  });
+
+  return (
+    <div className="table-shell">
+      <table className="data-table audit-table">
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

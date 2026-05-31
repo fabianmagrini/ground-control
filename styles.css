@@ -345,11 +345,9 @@ input[type="search"] {
   color: var(--ink);
 }
 
-.ticket-list,
 .source-list,
 .knowledge-list,
 .tool-list,
-.audit-list,
 .layer-stack,
 #eval-list,
 #gateway-list,
@@ -360,26 +358,99 @@ input[type="search"] {
   gap: 10px;
 }
 
-.ticket-card {
+.table-shell {
+  overflow-x: auto;
+}
+
+.data-table {
   width: 100%;
-  border: 1px solid var(--line);
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.data-table th {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  padding: 0 8px;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.data-table td {
+  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--line);
   background: #fbfcfd;
+  padding: 0;
+  vertical-align: top;
+}
+
+.data-table td:first-child {
+  border-left: 1px solid var(--line);
+  border-radius: 8px 0 0 8px;
+}
+
+.data-table td:last-child {
+  border-right: 1px solid var(--line);
+  border-radius: 0 8px 8px 0;
+}
+
+.data-table tr.active td,
+.data-table tr:hover td {
+  background: #eef7f8;
+  border-color: #9fd4d7;
+}
+
+.queue-table th:last-child,
+.queue-table td:last-child {
+  width: 54px;
+  padding: 13px 10px 13px 0;
+  text-align: right;
+}
+
+.ticket-row-button {
+  width: 100%;
+  border: 0;
+  background: transparent;
   color: var(--ink);
   text-align: left;
   padding: 13px;
-  border-radius: 8px;
 }
 
-.ticket-card strong {
+.ticket-row-button strong {
   display: block;
   margin: 4px 0;
   line-height: 1.35;
 }
 
-.ticket-card.active,
-.ticket-card:hover {
-  background: #eef7f8;
-  border-color: #9fd4d7;
+.ticket-row-button span:last-child {
+  display: block;
+}
+
+.audit-table {
+  border-spacing: 0 8px;
+}
+
+.audit-table th:first-child,
+.audit-table td:first-child {
+  width: 64px;
+}
+
+.audit-table th:nth-child(2),
+.audit-table td:nth-child(2) {
+  width: 96px;
+}
+
+.audit-table td {
+  padding: 12px;
+  line-height: 1.45;
+}
+
+.audit-table td:first-child,
+.audit-table td:nth-child(2) {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .status-pill,

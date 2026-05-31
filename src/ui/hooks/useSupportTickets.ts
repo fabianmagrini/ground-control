@@ -1,12 +1,14 @@
+import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { initialTickets } from "../../domain/fixtures";
+import { ticketsRouteDataQueryOptions } from "../../domain/routeData";
 import type { Ticket } from "../../domain/types";
 
 export type Metric = readonly [string, number | string, string];
 
 export function useSupportTickets() {
-  const [tickets, setTickets] = useState<Ticket[]>(() => structuredClone(initialTickets));
-  const [activeTicketId, setActiveTicketId] = useState(initialTickets[0].id);
+  const { data: ticketRouteData } = useQuery(ticketsRouteDataQueryOptions);
+  const [tickets, setTickets] = useState<Ticket[]>(() => structuredClone(ticketRouteData));
+  const [activeTicketId, setActiveTicketId] = useState(ticketRouteData[0].id);
   const [queueFilter, setQueueFilter] = useState("all");
 
   const activeTicket = tickets.find((ticket) => ticket.id === activeTicketId) ?? tickets[0];
@@ -42,8 +44,8 @@ export function useSupportTickets() {
   }
 
   function resetTickets() {
-    setTickets(structuredClone(initialTickets));
-    setActiveTicketId(initialTickets[0].id);
+    setTickets(structuredClone(ticketRouteData));
+    setActiveTicketId(ticketRouteData[0].id);
     setQueueFilter("all");
   }
 
