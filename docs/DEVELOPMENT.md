@@ -79,7 +79,7 @@ Current app structure:
 
 - `src/domain/types.ts`: domain types
 - `src/domain/fixtures.ts`: mock data
-- `src/domain/copilot.ts`: Copilot simulation
+- `src/intelligence`: intelligence service, retrieval, prompt registry, model gateway, and validators
 - `src/ui/IntelligenceOpsApp.tsx`: app shell composition
 - `src/ui/AppState.tsx`: prototype state and workflow actions
 - `src/ui/sections`: route-level feature components

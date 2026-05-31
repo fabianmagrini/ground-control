@@ -63,7 +63,8 @@ See [docs/SCREENSHOTS.md](docs/SCREENSHOTS.md) for current prototype screenshots
 - `src/ui/AppState.tsx`: Shared prototype state and workflow actions
 - `src/ui/sections`: Route-level feature sections
 - `src/ui/components.tsx`: Shared UI components
-- `src/domain`: Typed fixtures, domain types, and Copilot simulation
+- `src/domain`: Typed fixtures and domain types
+- `src/intelligence`: Prompt registry, retrieval, model gateway, structured output, and validators
 - `styles.css`: Responsive enterprise-console styling
 - `index.html` and `app.js`: Legacy static prototype retained as migration reference
 - `AGENTS.md`: Instructions for AI coding agents working in this repo

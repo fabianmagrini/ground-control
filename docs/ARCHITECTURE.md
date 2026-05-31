@@ -44,6 +44,7 @@ Data services
 - [ADR 0008: Use Shared Zod Contracts](ADR-0008-shared-zod-contracts.md)
 - [ADR 0009: Add Hono API Service Boundary](ADR-0009-hono-api-service.md)
 - [ADR 0010: Use Postgres and Drizzle for Persistence](ADR-0010-postgres-drizzle.md)
+- [ADR 0011: Add an Intelligence Service Boundary](ADR-0011-intelligence-service-boundary.md)
 
 ## Core Principle
 

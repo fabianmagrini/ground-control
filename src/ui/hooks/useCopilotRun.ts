@@ -1,11 +1,9 @@
 import { useState } from "react";
 import {
-  createAction,
-  createDraft,
-  createSummary,
-  retrieveSources,
-} from "../../domain/copilot";
-import type { RetrievedSource, Ticket, TraceStep } from "../../domain/types";
+  retrieveSupportSources,
+  runSupportIntelligence,
+} from "../../intelligence/service";
+import type { KnowledgeSource, RetrievedSource, Ticket, TraceStep } from "../../domain/types";
 
 export const EMPTY_DRAFT = "No draft generated yet.";
 
@@ -16,7 +14,15 @@ const IDLE_CONFIDENCE = "Idle";
 
 export type SystemTab = "trace" | "account" | "tools" | "audit";
 
-export function useCopilotRun(activeTicket: Ticket, addAudit: (actor: string, event: string) => void) {
+export function useCopilotRun({
+  activeTicket,
+  knowledgeSources,
+  addAudit,
+}: {
+  activeTicket: Ticket;
+  knowledgeSources: KnowledgeSource[];
+  addAudit: (actor: string, event: string) => void;
+}) {
   const [sources, setSources] = useState<RetrievedSource[]>([]);
   const [trace, setTrace] = useState<TraceStep[]>(idleTrace);
   const [summary, setSummary] = useState(EMPTY_SUMMARY);
@@ -37,38 +43,38 @@ export function useCopilotRun(activeTicket: Ticket, addAudit: (actor: string, ev
   }
 
   function runCopilot() {
-    const result = retrieveSources(activeTicket);
-    const nextDraft = createDraft(activeTicket, result.sources);
+    const result = runSupportIntelligence({
+      ticket: activeTicket,
+      knowledgeSources,
+      mode: "full",
+    });
+
     setSources(result.sources);
-    setTrace([
-      ...result.trace,
-      {
-        title: "Model gateway",
-        body: "Routed to general-low-latency with fallback enabled, temperature locked, and structured output schema.",
-      },
-      {
-        title: "Guardrail validation",
-        body: "Checked citations, unsupported commitments, sensitive data, and whether the response requires human approval.",
-      },
-    ]);
-    setSummary(createSummary(activeTicket));
-    setAction(createAction(activeTicket));
-    setDraft(nextDraft);
-    setConfidence(activeTicket.risk === "High" ? "88% review" : "94% grounded");
-    addAudit("Copilot", `Generated grounded assistance for ${activeTicket.id}.`);
+    setTrace(result.trace.steps);
+    setSummary(result.summary);
+    setAction(result.action);
+    setDraft(result.draft);
+    setConfidence(result.confidence);
+    addAudit(result.auditEvent.actor, result.auditEvent.event);
   }
 
   function retrieveForActiveTicket() {
-    const result = retrieveSources(activeTicket);
+    const result = retrieveSupportSources({ ticket: activeTicket, knowledgeSources });
     setSources(result.sources);
     setTrace(result.trace);
   }
 
   function draftForActiveTicket() {
-    const result = retrieveSources(activeTicket);
+    const result = runSupportIntelligence({
+      ticket: activeTicket,
+      knowledgeSources,
+      mode: "draft",
+    });
+
     setSources(result.sources);
-    setTrace(result.trace);
-    setDraft(createDraft(activeTicket, result.sources));
+    setTrace(result.trace.steps);
+    setDraft(result.draft);
+    setConfidence(result.confidence);
   }
 
   function markReplyApproved() {
@@ -94,13 +100,31 @@ export function useCopilotRun(activeTicket: Ticket, addAudit: (actor: string, ev
     tab,
     setTab,
     runCopilot,
-    refreshSummary: () => setSummary(createSummary(activeTicket)),
-    refreshAction: () => setAction(createAction(activeTicket)),
     retrieveForActiveTicket,
     draftForActiveTicket,
     insertDraft: () => setReply(draft === EMPTY_DRAFT ? "" : draft),
     markReplyApproved,
     resetCopilot,
+    refreshSummary: () => {
+      const result = runSupportIntelligence({
+        ticket: activeTicket,
+        knowledgeSources,
+        mode: "summarize",
+      });
+      setSummary(result.summary);
+      setTrace(result.trace.steps);
+      setConfidence(result.confidence);
+    },
+    refreshAction: () => {
+      const result = runSupportIntelligence({
+        ticket: activeTicket,
+        knowledgeSources,
+        mode: "validate",
+      });
+      setAction(result.action);
+      setTrace(result.trace.steps);
+      setConfidence(result.confidence);
+    },
   };
 }
 

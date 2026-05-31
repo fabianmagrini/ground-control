@@ -72,8 +72,12 @@ export function AppStateProvider({
 }) {
   const review = useReviewWorkflow();
   const tickets = useSupportTickets();
-  const copilot = useCopilotRun(tickets.activeTicket, review.addAudit);
   const knowledge = useKnowledgeSearch();
+  const copilot = useCopilotRun({
+    activeTicket: tickets.activeTicket,
+    knowledgeSources: knowledge.knowledgeSources,
+    addAudit: review.addAudit,
+  });
   const workflow = useSupportWorkflowActions({
     activeTicket: tickets.activeTicket,
     reply: copilot.reply,

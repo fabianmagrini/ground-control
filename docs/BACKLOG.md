@@ -40,13 +40,13 @@
 
 ## Phase 4: Real Intelligence Layer
 
-- Create an intelligence service.
-- Add model-gateway abstraction.
-- Add prompt registry and prompt versioning.
-- Add structured outputs.
-- Add retrieval over Postgres full-text and pgvector.
-- Add permission-aware retrieval filters.
-- Add source citations and output validators.
+- [x] Create an intelligence service.
+- [x] Add model-gateway abstraction.
+- [x] Add prompt registry and prompt versioning.
+- [x] Add structured outputs.
+- [x] Add retrieval over Postgres full-text and pgvector.
+- [x] Add permission-aware retrieval filters.
+- [x] Add source citations and output validators.
 
 ## Phase 5: Enterprise Readiness
 
