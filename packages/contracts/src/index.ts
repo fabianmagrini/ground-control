@@ -16,6 +16,34 @@ export const ticketStatusSchema = z.enum([
   "Resolved",
 ]);
 export const riskSchema = z.enum(["Low", "Medium", "High"]);
+export const userRoleSchema = z.enum([
+  "admin",
+  "support_manager",
+  "support_agent",
+  "billing_ops",
+  "engineering",
+  "trust",
+]);
+
+export const oidcClaimsSchema = z.object({
+  sub: z.string(),
+  email: z.string().email(),
+  name: z.string(),
+  tenant: z.string(),
+  roles: z.array(userRoleSchema),
+  regions: z.array(z.string()).default([]),
+  entitlements: z.array(z.string()).default([]),
+});
+
+export const authIdentitySchema = z.object({
+  subject: z.string(),
+  email: z.string().email(),
+  name: z.string(),
+  tenantSlug: z.string(),
+  roles: z.array(userRoleSchema),
+  allowedRegions: z.array(z.string()),
+  entitlements: z.array(z.string()),
+});
 
 export const messageSchema = z.object({
   sender: z.string(),
@@ -165,6 +193,9 @@ export type Section = z.infer<typeof sectionSchema>;
 export type Priority = z.infer<typeof prioritySchema>;
 export type TicketStatus = z.infer<typeof ticketStatusSchema>;
 export type Risk = z.infer<typeof riskSchema>;
+export type UserRole = z.infer<typeof userRoleSchema>;
+export type OidcClaims = z.infer<typeof oidcClaimsSchema>;
+export type AuthIdentity = z.infer<typeof authIdentitySchema>;
 export type Message = z.infer<typeof messageSchema>;
 export type AccountContext = z.infer<typeof accountContextSchema>;
 export type Ticket = z.infer<typeof ticketSchema>;

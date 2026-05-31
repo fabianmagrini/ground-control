@@ -45,6 +45,7 @@ Data services
 - [ADR 0009: Add Hono API Service Boundary](ADR-0009-hono-api-service.md)
 - [ADR 0010: Use Postgres and Drizzle for Persistence](ADR-0010-postgres-drizzle.md)
 - [ADR 0011: Add an Intelligence Service Boundary](ADR-0011-intelligence-service-boundary.md)
+- [ADR 0012: Add OIDC-Shaped API Auth With RBAC and ABAC](ADR-0012-oidc-rbac-abac.md)
 
 ## Core Principle
 

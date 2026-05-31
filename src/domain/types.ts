@@ -2,6 +2,7 @@ export type {
   AccountContext,
   AiTrace,
   Approval,
+  AuthIdentity,
   AuditEvent,
   CopilotRunRequest,
   CopilotRunResult,
@@ -20,4 +21,5 @@ export type {
   ToolCall,
   ToolDefinition,
   TraceStep,
+  UserRole,
 } from "../../packages/contracts/src";

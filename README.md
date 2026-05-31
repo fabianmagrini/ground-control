@@ -59,6 +59,7 @@ See [docs/SCREENSHOTS.md](docs/SCREENSHOTS.md) for current prototype screenshots
 ## Current Prototype Files
 
 - `src/routes`: TanStack Start route files
+- `src/auth`: OIDC-shaped API identity, RBAC, and ABAC policy boundary
 - `src/ui/IntelligenceOpsApp.tsx`: App shell composition
 - `src/ui/AppState.tsx`: Shared prototype state and workflow actions
 - `src/ui/sections`: Route-level feature sections

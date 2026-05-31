@@ -50,7 +50,7 @@
 
 ## Phase 5: Enterprise Readiness
 
-- Add SSO/OIDC with RBAC and ABAC.
+- [x] Add SSO/OIDC with RBAC and ABAC.
 - Add tenant isolation.
 - Add OpenTelemetry traces.
 - Add Langfuse or equivalent AI observability.

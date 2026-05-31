@@ -73,12 +73,31 @@ After UI changes:
 5. Visit Approvals, Knowledge, Observability, and Governance.
 6. Check browser console for errors.
 
+## Local API Auth
+
+The Hono API enforces an OIDC-shaped identity, RBAC permissions, and ABAC filters. In local development, requests without identity headers use the built-in `local-dev` admin identity. To test a specific identity, send trusted claims in `x-ground-control-oidc-claims`:
+
+```json
+{
+  "sub": "user-123",
+  "email": "agent@example.com",
+  "name": "Support Agent",
+  "tenant": "ground-control-demo",
+  "roles": ["support_agent"],
+  "regions": ["APAC", "US"],
+  "entitlements": ["All support", "Enterprise support"]
+}
+```
+
+Production must verify OIDC tokens before claims are trusted by the API.
+
 ## Code Organization Guidance
 
 Current app structure:
 
 - `src/domain/types.ts`: domain types
 - `src/domain/fixtures.ts`: mock data
+- `src/auth`: OIDC-shaped identity parsing, RBAC, ABAC, and API auth middleware
 - `src/intelligence`: intelligence service, retrieval, prompt registry, model gateway, and validators
 - `src/ui/IntelligenceOpsApp.tsx`: app shell composition
 - `src/ui/AppState.tsx`: prototype state and workflow actions

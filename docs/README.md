@@ -23,6 +23,7 @@ Start here when reviewing or extending the project documentation.
 - [ADR 0009](ADR-0009-hono-api-service.md): Hono API service boundary
 - [ADR 0010](ADR-0010-postgres-drizzle.md): Postgres and Drizzle persistence
 - [ADR 0011](ADR-0011-intelligence-service-boundary.md): intelligence service boundary
+- [ADR 0012](ADR-0012-oidc-rbac-abac.md): OIDC-shaped API auth with RBAC and ABAC
 
 ## Documentation Rules
 
