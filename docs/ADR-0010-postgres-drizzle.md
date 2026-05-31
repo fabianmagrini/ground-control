@@ -33,6 +33,8 @@ Route-data endpoints should read through a repository boundary. Until local seed
 
 Provide local seed data through `npm run db:seed`. The seed script resets only the `ground-control-demo` tenant, then loads the prototype support tickets, messages, knowledge sources, chunks, approvals, audit events, prompt, trace, and eval data.
 
+Use Docker Compose for local Postgres development. The `postgres` service uses `pgvector/pgvector:pg16`, persists data in the `ground-control-postgres-data` Docker volume, and exposes the same `DATABASE_URL` documented in `.env.example`.
+
 ## Consequences
 
 Positive:
@@ -44,6 +46,7 @@ Positive:
 - Gives the fixture-backed prototype a concrete database target without forcing an immediate data migration.
 - Makes the database-backed endpoint path testable without requiring every local UI check to run Postgres.
 - Gives developers a repeatable local dataset that matches the prototype workflows.
+- Keeps local pgvector availability aligned with the retrieval direction.
 
 Tradeoffs:
 
@@ -51,6 +54,7 @@ Tradeoffs:
 - Local seed data intentionally resets the demo tenant, so it is not suitable for shared or production databases.
 - Local developers need a Postgres `DATABASE_URL` when running database commands.
 - JSONB trace and metadata fields are flexible but less relationally queryable until usage patterns are clearer.
+- Docker-based Postgres is a development convenience, not a production topology.
 
 Follow-up:
 

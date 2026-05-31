@@ -28,17 +28,36 @@ The current app uses TanStack Start, React, TypeScript, and Vite.
 
 Route data is read through `src/db/routeDataRepository.ts`. By default, the repository keeps the fixture fallback active so local UI smoke tests do not require Postgres before seed data exists.
 
-To read route data from Postgres-backed endpoints, provide `DATABASE_URL` and run with:
+Start local Postgres with Docker:
+
+```bash
+npm run db:up
+```
+
+This starts `ground-control-postgres` from the `pgvector/pgvector:pg16` image and exposes:
+
+```text
+postgres://postgres:postgres@localhost:5432/intelligence_ops
+```
+
+Apply the Drizzle schema and load the demo tenant:
+
+```bash
+npm run db:push
+npm run db:seed
+```
+
+To read route data from Postgres-backed endpoints, run:
 
 ```bash
 GROUND_CONTROL_ROUTE_DATA_SOURCE=database npm run dev
 ```
 
-The database must already have the Drizzle migration applied and local seed data loaded:
+Useful database commands:
 
 ```bash
-npm run db:push
-npm run db:seed
+npm run db:logs
+npm run db:down
 ```
 
 The seed script resets only the `ground-control-demo` tenant and reloads the prototype tickets, messages, knowledge sources, approvals, audit events, prompt, trace, evals, and chunks.

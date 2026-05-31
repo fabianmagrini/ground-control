@@ -37,6 +37,15 @@ Run UI smoke tests:
 npm run test:ui
 ```
 
+Start the optional local Postgres database:
+
+```bash
+npm run db:up
+npm run db:push
+npm run db:seed
+GROUND_CONTROL_ROUTE_DATA_SOURCE=database npm run dev
+```
+
 ## What It Shows
 
 - Support command center with queue filters, SLA state, ARR, customer risk, sentiment, and account context
