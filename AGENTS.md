@@ -46,6 +46,7 @@ Build toward an enterprise-grade support console where the intelligence layer is
 - Do not wire real model providers, secrets, SSO, or cloud services without explicit user approval.
 - Do not remove existing demo behavior unless the replacement is verified.
 - After frontend changes, run the app and verify in the browser.
+- After making changes, if the relevant checks pass, commit and push the work to the current branch.
 
 ## Testing and Visual References
 
