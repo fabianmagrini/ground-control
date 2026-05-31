@@ -41,6 +41,7 @@ Data services
 - [ADR 0005: Temporarily Retain the Legacy Static Prototype](ADR-0005-retain-legacy-static-prototype.md)
 - [ADR 0006: Use Playwright for UI Smoke Tests](ADR-0006-playwright-ui-smoke-tests.md)
 - [ADR 0007: Use TanStack Query for Route Data](ADR-0007-query-backed-route-data.md)
+- [ADR 0008: Use Shared Zod Contracts](ADR-0008-shared-zod-contracts.md)
 
 ## Core Principle
 

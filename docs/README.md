@@ -19,6 +19,7 @@ Start here when reviewing or extending the project documentation.
 - [ADR 0005](ADR-0005-retain-legacy-static-prototype.md): legacy static prototype retention
 - [ADR 0006](ADR-0006-playwright-ui-smoke-tests.md): Playwright UI smoke tests
 - [ADR 0007](ADR-0007-query-backed-route-data.md): TanStack Query-backed route data
+- [ADR 0008](ADR-0008-shared-zod-contracts.md): shared Zod contracts
 
 ## Documentation Rules
 

@@ -16,18 +16,18 @@
 
 ## Phase 2: Shared Contracts
 
-- Create `packages/contracts`.
-- Add Zod schemas for:
-  - Ticket
-  - Account
-  - KnowledgeSource
-  - Approval
-  - AuditEvent
-  - CopilotRunRequest
-  - CopilotRunResult
-  - AiTrace
-  - ToolCall
-  - EvalRun
+- [x] Create `packages/contracts`.
+- [x] Add Zod schemas for:
+  - [x] Ticket
+  - [x] Account
+  - [x] KnowledgeSource
+  - [x] Approval
+  - [x] AuditEvent
+  - [x] CopilotRunRequest
+  - [x] CopilotRunResult
+  - [x] AiTrace
+  - [x] ToolCall
+  - [x] EvalRun
 - Use schemas in server functions and UI.
 
 ## Phase 3: API and Persistence
