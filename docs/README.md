@@ -31,6 +31,7 @@ Start here when reviewing or extending the project documentation.
 - [ADR 0016](ADR-0016-eval-regression-gates.md): intelligence eval regression gates
 - [ADR 0017](ADR-0017-ci-verification-pipeline.md): CI verification pipeline
 - [ADR 0018](ADR-0018-production-security-review.md): production security review gate
+- [ADR 0019](ADR-0019-dashboard-visualization-libraries.md): native dashboard visualization libraries
 
 ## Documentation Rules
 
