@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { IntelligenceOpsApp } from "../ui/IntelligenceOpsApp";
+import { GroundControlApp } from "../ui/GroundControlApp";
 
 export const Route = createFileRoute("/support/$ticketId")({
   component: SupportTicketRoute,
@@ -8,5 +8,5 @@ export const Route = createFileRoute("/support/$ticketId")({
 function SupportTicketRoute() {
   const { ticketId } = Route.useParams();
 
-  return <IntelligenceOpsApp section="support" ticketId={ticketId} />;
+  return <GroundControlApp section="support" ticketId={ticketId} />;
 }

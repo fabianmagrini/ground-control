@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { IntelligenceOpsApp } from "../ui/IntelligenceOpsApp";
+import { GroundControlApp } from "../ui/GroundControlApp";
 
 export const Route = createFileRoute("/governance")({
   component: GovernanceRoute,
 });
 
 function GovernanceRoute() {
-  return <IntelligenceOpsApp section="governance" />;
+  return <GroundControlApp section="governance" />;
 }

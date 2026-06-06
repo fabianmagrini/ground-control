@@ -29,10 +29,10 @@ export function AppShell({
     <div className="app-shell">
       <aside className="sidebar" aria-label="Application navigation">
         <div className="brand">
-          <div className="brand-mark">IO</div>
+          <div className="brand-mark">GC</div>
           <div>
             <h1>{bootstrap.appName}</h1>
-            <p>Enterprise support console</p>
+            <p>Enterprise support command center</p>
           </div>
         </div>
 

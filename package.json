@@ -1,9 +1,9 @@
 {
-  "name": "intelligence-layer-architecture",
+  "name": "ground-control",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Enterprise support console prototype with an explicit intelligence layer.",
+  "description": "Ground Control support-command-center prototype with an explicit intelligence layer.",
   "scripts": {
     "dev": "vite dev --host 0.0.0.0 --port 4173",
     "build": "vite build",

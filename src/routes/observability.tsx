@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { IntelligenceOpsApp } from "../ui/IntelligenceOpsApp";
+import { GroundControlApp } from "../ui/GroundControlApp";
 
 export const Route = createFileRoute("/observability")({
   component: ObservabilityRoute,
 });
 
 function ObservabilityRoute() {
-  return <IntelligenceOpsApp section="observability" />;
+  return <GroundControlApp section="observability" />;
 }

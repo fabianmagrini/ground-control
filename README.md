@@ -1,6 +1,6 @@
-# IntelligenceOps Support Console
+# Ground Control Support Console
 
-Enterprise support-console prototype for a modern web app with an intelligence layer.
+Enterprise support-command-center prototype for a modern web app with an intelligence layer.
 
 The current app has been migrated to TanStack Start, React, and TypeScript. It still uses simulated app data, retrieval, model-gateway behavior, trace events, approvals, evals, and governance controls, but the main implementation now lives in typed modules under `src/`.
 
@@ -66,7 +66,7 @@ See [docs/SCREENSHOTS.md](docs/SCREENSHOTS.md) for current prototype screenshots
 
 - `src/routes`: TanStack Start route files
 - `src/auth`: OIDC-shaped API identity, RBAC, and ABAC policy boundary
-- `src/ui/IntelligenceOpsApp.tsx`: App shell composition
+- `src/ui/GroundControlApp.tsx`: App shell composition
 - `src/ui/AppState.tsx`: Shared prototype state and workflow actions
 - `src/ui/sections`: Route-level feature sections
 - `src/ui/components.tsx`: Shared UI components

@@ -14,7 +14,7 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "IntelligenceOps Support Console" },
+      { title: "Ground Control Support Console" },
     ],
   }),
   component: RootComponent,
@@ -24,7 +24,7 @@ function RootComponent() {
   return (
     <RootDocument>
       <QueryProvider>
-        <AppStateProvider bootstrap={{ appName: "IntelligenceOps", environment: "local-development" }}>
+        <AppStateProvider bootstrap={{ appName: "Ground Control", environment: "local-development" }}>
           <Outlet />
         </AppStateProvider>
       </QueryProvider>

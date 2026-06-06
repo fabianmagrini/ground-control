@@ -15,7 +15,7 @@ type Props = {
   ticketId?: string;
 };
 
-export function IntelligenceOpsApp({ section, ticketId }: Props) {
+export function GroundControlApp({ section, ticketId }: Props) {
   return <RoutedConsole section={section} ticketId={ticketId} />;
 }
 

@@ -135,7 +135,7 @@ Current app structure:
 - `src/evals`: deterministic intelligence regression evals
 - `src/intelligence`: intelligence service, retrieval, prompt registry, model gateway, and validators
 - `src/observability`: OpenTelemetry tracing helpers and AI observability events
-- `src/ui/IntelligenceOpsApp.tsx`: app shell composition
+- `src/ui/GroundControlApp.tsx`: app shell composition
 - `src/ui/AppState.tsx`: prototype state and workflow actions
 - `src/ui/sections`: route-level feature components
 - `src/ui/components.tsx`: shared UI building blocks
