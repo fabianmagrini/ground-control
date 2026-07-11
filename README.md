@@ -2,7 +2,7 @@
 
 Enterprise support-command-center prototype for a modern web app with an intelligence layer.
 
-The current app has been migrated to TanStack Start, React, and TypeScript. It still uses simulated app data, retrieval, model-gateway behavior, trace events, approvals, evals, and governance controls, but the main implementation now lives in typed modules under `src/`.
+The current app uses TanStack Start, React, and TypeScript. It includes shared Zod contracts, an optional Postgres/Drizzle route-data repository, an authenticated Hono API boundary, and a deterministic intelligence service. The primary interactive workflow remains a prototype: Copilot execution and workflow-changing actions currently run in browser-local React state, and fixture data remains the default.
 
 ## Run Locally
 
@@ -65,13 +65,17 @@ See [docs/SCREENSHOTS.md](docs/SCREENSHOTS.md) for current prototype screenshots
 ## Current Prototype Files
 
 - `src/routes`: TanStack Start route files
-- `src/auth`: OIDC-shaped API identity, RBAC, and ABAC policy boundary
 - `src/ui/GroundControlApp.tsx`: App shell composition
-- `src/ui/AppState.tsx`: Shared prototype state and workflow actions
+- `src/ui/AppState.tsx`: Client-local orchestration for prototype workflows
 - `src/ui/sections`: Route-level feature sections
 - `src/ui/components.tsx`: Shared UI components
-- `src/domain`: Typed fixtures and domain types
+- `src/domain`: Typed fixtures, query-backed route data, and server functions
+- `src/api`: Hono read API with authentication and authorization policy enforcement
+- `src/auth`: OIDC-shaped identity parsing, RBAC, and ABAC
+- `src/db`: Drizzle schema and fixture/Postgres route-data repository
 - `src/intelligence`: Prompt registry, retrieval, model gateway, structured output, and validators
+- `src/observability`: OpenTelemetry spans and local AI observation events
+- `packages/contracts`: Shared Zod schemas and inferred types
 - `styles.css`: Responsive enterprise-console styling
 - `index.html` and `app.js`: Legacy static prototype retained as migration reference
 - `AGENTS.md`: Instructions for AI coding agents working in this repo
@@ -104,4 +108,4 @@ TypeScript intelligence service
 OpenTelemetry + Langfuse
 ```
 
-The app now has real routes for `/support`, `/approvals`, `/knowledge`, `/observability`, and `/governance`. See [docs/STACK.md](docs/STACK.md) and [docs/BACKLOG.md](docs/BACKLOG.md) for the remaining migration plan.
+The app has routes for `/support`, `/approvals`, `/knowledge`, `/observability`, and `/governance`. The original implementation backlog is complete; [docs/BACKLOG.md](docs/BACKLOG.md) records that delivery and identifies the next productionization horizon. [docs/SECURITY_REVIEW.md](docs/SECURITY_REVIEW.md) is the source of truth for release blockers.

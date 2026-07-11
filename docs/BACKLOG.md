@@ -1,5 +1,7 @@
 # Backlog
 
+Status: the original prototype-to-enterprise-readiness implementation backlog is complete. Checked items below describe delivered prototype capabilities, not a declaration that the application is production-ready. See [Production Security Review](SECURITY_REVIEW.md) for current release blockers.
+
 ## Phase 0: Prototype Hardening
 
 - [x] Add explicit test IDs to critical interactive controls where accessible names are not enough.
@@ -57,3 +59,14 @@
 - [x] Add eval runner and regression gates.
 - [x] Add deployment pipeline.
 - [x] Add production security review.
+
+## Next Horizon: Productionization
+
+- [ ] Route browser data access through authenticated, authorization-aware service boundaries.
+- [ ] Move Copilot runs, approvals, escalation, and customer-visible actions to server-owned workflows.
+- [ ] Persist workflow mutations, traces, and immutable audit events.
+- [ ] Replace trusted local claims with verified OIDC bearer tokens.
+- [ ] Add database row-level security or equivalent database-enforced tenant isolation.
+- [ ] Add authorization, tenant-isolation, approval-gate, and unsafe-output security tests.
+- [ ] Configure production secrets, telemetry export, redaction, and retention policies.
+- [ ] Define deployment environments, promotion and rollback policy, backups, and incident response.

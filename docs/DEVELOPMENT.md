@@ -81,7 +81,7 @@ After UI changes:
 
 ## Local API Auth
 
-The Hono API enforces an OIDC-shaped identity, RBAC permissions, and ABAC filters. In local development, requests without identity headers use the built-in `local-dev` admin identity. To test a specific identity, send trusted claims in `x-ground-control-oidc-claims`:
+The Hono API enforces an OIDC-shaped identity, RBAC permissions, and ABAC filters. It currently provides a protected read boundary, but the main browser route-data flow uses TanStack Start server functions directly rather than calling these endpoints. In local development, API requests without identity headers use the built-in `local-dev` admin identity. To test a specific identity, send trusted claims in `x-ground-control-oidc-claims`:
 
 ```json
 {
@@ -129,8 +129,13 @@ The workflow is a verification and artifact pipeline. It does not deploy to host
 
 Current app structure:
 
-- `src/domain/types.ts`: domain types
+- `packages/contracts`: shared Zod schemas and inferred domain types
+- `src/domain/types.ts`: compatibility re-exports for domain types
 - `src/domain/fixtures.ts`: mock data
+- `src/domain/routeData.ts`: TanStack Query route-data definitions
+- `src/domain/serverFunctions.ts`: validated route-data server functions
+- `src/api`: authenticated Hono read endpoints
+- `src/db`: Drizzle schema and fixture/Postgres repository
 - `src/auth`: OIDC-shaped identity parsing, RBAC, ABAC, and API auth middleware
 - `src/evals`: deterministic intelligence regression evals
 - `src/intelligence`: intelligence service, retrieval, prompt registry, model gateway, and validators
@@ -141,11 +146,13 @@ Current app structure:
 - `src/ui/components.tsx`: shared UI building blocks
 - `src/routes`: TanStack Start route definitions
 
-Next cleanup steps:
+Next productionization steps:
 
-- Move state transitions into typed hooks.
-- Move server-owned operations into TanStack Start server functions.
-- Move domain types to `packages/contracts` when a monorepo is introduced.
+- Route customer-data reads through an authenticated server or API service boundary.
+- Move Copilot execution and workflow-changing actions out of browser-local state.
+- Persist approvals, audit events, traces, and ticket transitions.
+- Replace trusted development claims with verified OIDC bearer tokens.
+- Add database-enforced tenant isolation and authorization security tests.
 
 ## Naming Conventions
 

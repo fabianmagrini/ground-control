@@ -1,5 +1,31 @@
 # Architecture
 
+## Current Runtime Boundaries
+
+The repository contains the intended service boundaries, but they are not all on the primary UI execution path yet.
+
+```text
+Browser routes
+  |-- TanStack Query -> TanStack Start server functions -> fixture/Postgres repository
+  |-- AppState hooks -> client-local workflow transitions
+  `-- Copilot hook -> deterministic intelligence service in the web runtime
+
+Hono API
+  `-- authenticated, authorized, tenant-scoped read endpoints
+      (implemented, but not currently used by the main browser route-data flow)
+```
+
+Implemented today:
+
+- URL-backed TanStack Start routes and query-backed initial route data
+- Shared Zod contracts across UI, server functions, API, and intelligence results
+- Fixture-backed data by default, with optional tenant-scoped Postgres reads
+- Hono read endpoints with OIDC-shaped identity, RBAC, ABAC, and tracing
+- Deterministic prompt, retrieval, model-routing, validation, trace, and eval behavior
+- Client-local approvals, escalation, audit updates, and Copilot workflow state
+
+The main productionization seam is moving reads, Copilot runs, and workflow-changing actions behind authenticated server/API boundaries and persisting their results. The Hono API should not be interpreted as protecting browser workflows that do not yet call it.
+
 ## Reference Model
 
 ```text
@@ -8,7 +34,7 @@ Browser
 TanStack Start web app
   |-- routes and layouts
   |-- typed route modules
-  |-- future server functions
+  |-- server functions for route-data reads
   |-- TanStack Query route-data cache
   |
 API service
@@ -76,7 +102,7 @@ LLM -> orchestrator -> approved tool -> app service -> permission check -> audit
 
 - TanStack Start routes
 - Enterprise UI shell
-- Route modules and future server functions
+- Route modules and route-data server functions
 - Client-local prototype state in `src/ui/AppState.tsx`
 - Streaming UI for Copilot runs
 - Human-in-the-loop approval surfaces
